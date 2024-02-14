@@ -471,8 +471,420 @@ Bom, na classe, Contador, do pacote, basico, vamos aplicar as ações sobre os b
 Executando o código acima, agora, vamos ver que a cada click que realizamos sobre os botões de incremento e decremento, vamos conseguir acrescentar e subtrair de um em um.
 
 ## Aula 05 - Contador #03:
+Vamos, agora, focar na parte melhoria da qualidade visual do Contador.
+
+Para isso, iremos utilizar os recursos de CSS.
+
+Vamos, então, criar um novo arquivo fazendo o seguinte passo a passo
+
+    sobre o pacote "basico" clicamos com o botão direito -> New -> File -> File name: Contador.css -> Finish
+
+Dentro desse arquivo .css, vamos inserir o seguinte
+
+    .conteudo {
+        -fx-background-color: red; 
+    }
+
+Como um começo, definimos o plano de fundo na cor vermelha para ficar nítido que foi implementado com sucesso o css.
+
+Agora, vamos mostrar como conseguimos considerar esse arquivo css dentro da nossa classe, Contador, do pacote, basico
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.geometry.Pos;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.scene.control.Label;
+    import javafx.scene.layout.HBox;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class Contador extends Application {
+        
+        private int contador = 0;
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            Label labelTitulo = new Label("Contador");
+            Label labelNumero = new Label("0");
+            
+            Button botaoDecremento = new Button("-");
+            botaoDecremento.setOnAction(e -> {
+                contador--;
+                labelNumero.setText(Integer.toString(contador));
+            });
+            
+            Button botaoIncremento = new Button("+");
+            botaoIncremento.setOnAction(e -> {
+                contador++;
+                labelNumero.setText(Integer.toString(contador));
+            });
+            
+            HBox boxBotoes = new HBox();
+            boxBotoes.setAlignment(Pos.CENTER);
+            boxBotoes.setSpacing(10);
+            boxBotoes.getChildren().add(botaoDecremento);
+            boxBotoes.getChildren().add(botaoIncremento);
+            
+            VBox boxPrincipal = new VBox();
+            boxPrincipal.setAlignment(Pos.CENTER);
+            boxPrincipal.setSpacing(10);
+            boxPrincipal.getChildren().add(labelTitulo);
+            boxPrincipal.getChildren().add(labelNumero);
+            boxPrincipal.getChildren().add(boxBotoes);
+            
+            String caminhoDoCss = getClass()
+                    .getResource("/basico/Contador.css")
+                    .toExternalForm();
+            
+            Scene cenaPrincipal = new Scene(boxPrincipal, 400, 400);
+            cenaPrincipal.getStylesheets().add(caminhoDoCss);
+            
+            primaryStage.setScene(cenaPrincipal);
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+No caso, utilizamos o getStylesheets e nela definimos um caminho onde se encontra o arquivo "Contador.css" para verificarmos se a classe está conseguindo identificar esse arquivo .css. Ao executarmos o código acima, se não tivemos nenhum problema e o modal apareceu normalmente, então significa que o arquivo foi identificado de foma bem sucedida.
+
+Porém, note que, a customização da cor que colocamos dentro do arquivo, Contador.css, não foi considerado, pois o processo acima, só funcionou para identificarmos o arquivo. Agora, falta, conseguirmos aplicar o que foi configurado dentro do arquivo .css. No caso, realizamos o seguinte
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.geometry.Pos;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.scene.control.Label;
+    import javafx.scene.layout.HBox;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class Contador extends Application {
+        
+        private int contador = 0;
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            Label labelTitulo = new Label("Contador");
+            Label labelNumero = new Label("0");
+            
+            Button botaoDecremento = new Button("-");
+            botaoDecremento.setOnAction(e -> {
+                contador--;
+                labelNumero.setText(Integer.toString(contador));
+            });
+            
+            Button botaoIncremento = new Button("+");
+            botaoIncremento.setOnAction(e -> {
+                contador++;
+                labelNumero.setText(Integer.toString(contador));
+            });
+            
+            HBox boxBotoes = new HBox();
+            boxBotoes.setAlignment(Pos.CENTER);
+            boxBotoes.setSpacing(10);
+            boxBotoes.getChildren().add(botaoDecremento);
+            boxBotoes.getChildren().add(botaoIncremento);
+            
+            VBox boxConteudo = new VBox();
+            boxConteudo.getStyleClass().add("conteudo");
+            boxConteudo.setAlignment(Pos.CENTER);
+            boxConteudo.setSpacing(10);
+            boxConteudo.getChildren().add(labelTitulo);
+            boxConteudo.getChildren().add(labelNumero);
+            boxConteudo.getChildren().add(boxBotoes);
+            
+            String caminhoDoCss = getClass()
+                    .getResource("/basico/Contador.css")
+                    .toExternalForm();
+            
+            Scene cenaPrincipal = new Scene(boxConteudo, 400, 400);
+            cenaPrincipal.getStylesheets().add(caminhoDoCss);
+            
+            primaryStage.setScene(cenaPrincipal);
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+No caso, no boxConteudo, aplicamos o getStyleClass, e colocamos o nome do css que definimos a customização que queremos. Rodando o código acima, vamos ver que teremos a cor vermelha de fundo na aplicação, como havíamos definido. Mas queremos que a cor do fundo seja preto, então mudamos o nome de "red" para "black", no arquivo, Contador.css.
+
+Bom, além da cor de fundo, vamos precisar definir as fontes para isso tbm. No caso, existe uma fonte que é muito útil para tais finalidades de layout de páginas
+
+    https://fonts.google.com/
+
+Nela, conseguimos escolher as fontes e pegar o código css que nos permite aplicar a tal fonte. No caso, por exemplo peguei a seguinte fonte
+
+    https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@100..900&display=swap
+
+Então, para aplicarmos essa fonte, podemos realizar o seguinte na classe, Contador, inserindo
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.geometry.Pos;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.scene.control.Label;
+    import javafx.scene.layout.HBox;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class Contador extends Application {
+        
+        private int contador = 0;
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            Label labelTitulo = new Label("Contador");
+            Label labelNumero = new Label("0");
+            
+            Button botaoDecremento = new Button("-");
+            botaoDecremento.setOnAction(e -> {
+                contador--;
+                labelNumero.setText(Integer.toString(contador));
+            });
+            
+            Button botaoIncremento = new Button("+");
+            botaoIncremento.setOnAction(e -> {
+                contador++;
+                labelNumero.setText(Integer.toString(contador));
+            });
+            
+            HBox boxBotoes = new HBox();
+            boxBotoes.setAlignment(Pos.CENTER);
+            boxBotoes.setSpacing(10);
+            boxBotoes.getChildren().add(botaoDecremento);
+            boxBotoes.getChildren().add(botaoIncremento);
+            
+            VBox boxConteudo = new VBox();
+            boxConteudo.getStyleClass().add("conteudo");
+            boxConteudo.setAlignment(Pos.CENTER);
+            boxConteudo.setSpacing(10);
+            boxConteudo.getChildren().add(labelTitulo);
+            boxConteudo.getChildren().add(labelNumero);
+            boxConteudo.getChildren().add(boxBotoes);
+            
+            String caminhoDoCss = getClass()
+                    .getResource("/basico/Contador.css")
+                    .toExternalForm();
+            
+            Scene cenaPrincipal = new Scene(boxConteudo, 400, 400);
+            cenaPrincipal.getStylesheets().add(caminhoDoCss);
+            cenaPrincipal.getStylesheets().add("https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@100..900&display=swap");
+            
+            primaryStage.setScene(cenaPrincipal);
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+No caso, ao compilarmos o programa, ela irá buscar, usando a internet, essa fonte para ser aplicado.
+
+Mas, claro, uma boa prática seria que a tal personalização seja configurado dentro do arquivo .css, do que depender da internet. No caso, no arquivo, Contador.css, podemos realizar a seguinte customização
+
+    .conteudo {
+        -fx-background-color: #000;
+    }
+
+    .numero {
+        -fx-font-family: Oswald;
+        -fx-text-fill: #fff;
+    }
+
+Agora, falta, aplicarmos tais fontes da seguinte forma
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.geometry.Pos;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.scene.control.Label;
+    import javafx.scene.layout.HBox;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class Contador extends Application {
+        
+        private int contador = 0;
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            Label labelTitulo = new Label("Contador");
+            labelTitulo.getStyleClass().add("numero");
+            
+            Label labelNumero = new Label("0");
+            labelNumero.getStyleClass().add("numero");
+            
+            Button botaoDecremento = new Button("-");
+            botaoDecremento.setOnAction(e -> {
+                contador--;
+                labelNumero.setText(Integer.toString(contador));
+            });
+            
+            Button botaoIncremento = new Button("+");
+            botaoIncremento.setOnAction(e -> {
+                contador++;
+                labelNumero.setText(Integer.toString(contador));
+            });
+            
+            HBox boxBotoes = new HBox();
+            boxBotoes.setAlignment(Pos.CENTER);
+            boxBotoes.setSpacing(10);
+            boxBotoes.getChildren().add(botaoDecremento);
+            boxBotoes.getChildren().add(botaoIncremento);
+            
+            VBox boxConteudo = new VBox();
+            boxConteudo.getStyleClass().add("conteudo");
+            boxConteudo.setAlignment(Pos.CENTER);
+            boxConteudo.setSpacing(10);
+            boxConteudo.getChildren().add(labelTitulo);
+            boxConteudo.getChildren().add(labelNumero);
+            boxConteudo.getChildren().add(boxBotoes);
+            
+            String caminhoDoCss = getClass()
+                    .getResource("/basico/Contador.css")
+                    .toExternalForm();
+            
+            Scene cenaPrincipal = new Scene(boxConteudo, 400, 400);
+            cenaPrincipal.getStylesheets().add(caminhoDoCss);
+            
+            primaryStage.setScene(cenaPrincipal);
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Rodando o código acima, vamos ver que o css, numero, que definimos pegou no título e no valor da contagem.
+
+Podemos, claro, manipular, o tamanho da fonte tbm, colocando o seguinte no css, numero, que foi definido
+
+    .conteudo {
+        -fx-background-color: #000;
+    }
+
+    .numero {
+        -fx-font-family: Oswald;
+        -fx-text-fill: #fff;
+        -fx-font-size: 22px;
+    }
+
+Vamos criar uma outra classe css para título da seguinte forma
+
+    .conteudo {
+        -fx-background-color: #000;
+        -fx-font-family: Oswald;
+    }
+
+    .titulo {
+        -fx-text-fill: #48b2ee;
+        -fx-font-size: 32px;
+    }
+
+    .numero {
+        -fx-text-fill: #fff;
+        -fx-font-size: 22px;
+    }
+
+Aplicando, na classe, Contador.java, da seguinte forma
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.geometry.Pos;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.scene.control.Label;
+    import javafx.scene.layout.HBox;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class Contador extends Application {
+        
+        private int contador = 0;
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            Label labelTitulo = new Label("Contador");
+            labelTitulo.getStyleClass().add("titulo");
+            
+            Label labelNumero = new Label("0");
+            labelNumero.getStyleClass().add("numero");
+            
+            Button botaoDecremento = new Button("-");
+            botaoDecremento.setOnAction(e -> {
+                contador--;
+                labelNumero.setText(Integer.toString(contador));
+            });
+            
+            Button botaoIncremento = new Button("+");
+            botaoIncremento.setOnAction(e -> {
+                contador++;
+                labelNumero.setText(Integer.toString(contador));
+            });
+            
+            HBox boxBotoes = new HBox();
+            boxBotoes.setAlignment(Pos.CENTER);
+            boxBotoes.setSpacing(10);
+            boxBotoes.getChildren().add(botaoDecremento);
+            boxBotoes.getChildren().add(botaoIncremento);
+            
+            VBox boxConteudo = new VBox();
+            boxConteudo.getStyleClass().add("conteudo");
+            boxConteudo.setAlignment(Pos.CENTER);
+            boxConteudo.setSpacing(10);
+            boxConteudo.getChildren().add(labelTitulo);
+            boxConteudo.getChildren().add(labelNumero);
+            boxConteudo.getChildren().add(boxBotoes);
+            
+            String caminhoDoCss = getClass()
+                    .getResource("/basico/Contador.css")
+                    .toExternalForm();
+            
+            Scene cenaPrincipal = new Scene(boxConteudo, 400, 400);
+            cenaPrincipal.getStylesheets().add(caminhoDoCss);
+            
+            primaryStage.setScene(cenaPrincipal);
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Rodando o código acima, vamos ver que as customizações que foi definida no arquivo, Contador.css, surtiu efeito.
 
 ## Aula 06 - Contador #04:
+Vamos, agora, agora dinamizar os estilos.
+
+Ou seja, iremos utilizar as condicionais de forma a definir que tipo de customização seja atribuida para aquela classe de acordo com o tipo de resulado que tivermos nas ações dos botões.
 
 ## Aula 07 - Contador #05:
 

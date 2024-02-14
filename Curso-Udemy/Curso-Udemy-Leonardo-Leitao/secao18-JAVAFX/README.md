@@ -406,7 +406,69 @@ Bom, rodando, agora, o código acima, vamos ver que o layout melhorou. Claro, no
 Do ponto de vista de layout, ainda temos muitas implementações que podemos realizar para melhorar o visual, porém, na próxima aula, iremos focar, primeiro, no âmbito da funcionalidade dos botões para depois nos preocuparmos com a qualidade visual da aplicação.
 
 ## Aula 04 - Contador #02:
+Vamos, agora, implementar sobre os botões as funcionalidades de contagens.
 
+Bom, na classe, Contador, do pacote, basico, vamos aplicar as ações sobre os botões que definimos, da seguinte forma
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.geometry.Pos;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.scene.control.Label;
+    import javafx.scene.layout.HBox;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class Contador extends Application {
+        
+        private int contador = 0;
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            Label labelTitulo = new Label("Contador");
+            Label labelNumero = new Label("0");
+            
+            Button botaoDecremento = new Button("-");
+            botaoDecremento.setOnAction(e -> {
+                contador--;
+                labelNumero.setText(Integer.toString(contador));
+            });
+            
+            Button botaoIncremento = new Button("+");
+            botaoIncremento.setOnAction(e -> {
+                contador++;
+                labelNumero.setText(Integer.toString(contador));
+            });
+            
+            HBox boxBotoes = new HBox();
+            boxBotoes.setAlignment(Pos.CENTER);
+            boxBotoes.setSpacing(10);
+            boxBotoes.getChildren().add(botaoDecremento);
+            boxBotoes.getChildren().add(botaoIncremento);
+            
+            VBox boxPrincipal = new VBox();
+            boxPrincipal.setAlignment(Pos.CENTER);
+            boxPrincipal.setSpacing(10);
+            boxPrincipal.getChildren().add(labelTitulo);
+            boxPrincipal.getChildren().add(labelNumero);
+            boxPrincipal.getChildren().add(boxBotoes);
+            
+            Scene cenaPrincipal = new Scene(boxPrincipal, 400, 400);
+            
+            primaryStage.setScene(cenaPrincipal);
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Executando o código acima, agora, vamos ver que a cada click que realizamos sobre os botões de incremento e decremento, vamos conseguir acrescentar e subtrair de um em um.
 
 ## Aula 05 - Contador #03:
 

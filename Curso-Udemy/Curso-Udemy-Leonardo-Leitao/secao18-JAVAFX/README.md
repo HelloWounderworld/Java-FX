@@ -886,7 +886,109 @@ Vamos, agora, agora dinamizar os estilos.
 
 Ou seja, iremos utilizar as condicionais de forma a definir que tipo de customização seja atribuida para aquela classe de acordo com o tipo de resulado que tivermos nas ações dos botões.
 
+No caso, no arquivo, Contador.css, iremos complementar com a seguinte classe para personalizarmos os botões
+
+    .conteudo {
+        -fx-background-color: #000;
+        -fx-font-family: Oswald;
+    }
+
+    .titulo {
+        -fx-text-fill: #48b2ee;
+        -fx-font-size: 32px;
+    }
+
+    .numero {
+        -fx-text-fill: #fff;
+        -fx-font-size: 22px;
+    }
+
+    .botoes {
+        -fx-background-color: #fff;
+        -fx-text-fill: #48b2ee;
+        -fx-font-size: 24px;
+        -fx-min-width: 60px;
+        -fx-min-height: 60px;
+        -fx-background-radius: 30px;
+    }
+
+Agora, implementamos essa classe css, botoes, na nossa classe, Contador.java, da seguinte forma
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.geometry.Pos;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.scene.control.Label;
+    import javafx.scene.layout.HBox;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class Contador extends Application {
+        
+        private int contador = 0;
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            Label labelTitulo = new Label("Contador");
+            labelTitulo.getStyleClass().add("titulo");
+            
+            Label labelNumero = new Label("0");
+            labelNumero.getStyleClass().add("numero");
+            
+            Button botaoDecremento = new Button("-");
+            botaoDecremento.getStyleClass().add("botoes");
+            botaoDecremento.setOnAction(e -> {
+                contador--;
+                labelNumero.setText(Integer.toString(contador));
+            });
+            
+            Button botaoIncremento = new Button("+");
+            botaoIncremento.getStyleClass().add("botoes");
+            botaoIncremento.setOnAction(e -> {
+                contador++;
+                labelNumero.setText(Integer.toString(contador));
+            });
+            
+            HBox boxBotoes = new HBox();
+            boxBotoes.setAlignment(Pos.CENTER);
+            boxBotoes.setSpacing(10);
+            boxBotoes.getChildren().add(botaoDecremento);
+            boxBotoes.getChildren().add(botaoIncremento);
+            
+            VBox boxConteudo = new VBox();
+            boxConteudo.getStyleClass().add("conteudo");
+            boxConteudo.setAlignment(Pos.CENTER);
+            boxConteudo.setSpacing(10);
+            boxConteudo.getChildren().add(labelTitulo);
+            boxConteudo.getChildren().add(labelNumero);
+            boxConteudo.getChildren().add(boxBotoes);
+            
+            String caminhoDoCss = getClass()
+                    .getResource("/basico/Contador.css")
+                    .toExternalForm();
+            
+            Scene cenaPrincipal = new Scene(boxConteudo, 400, 400);
+            cenaPrincipal.getStylesheets().add(caminhoDoCss);
+            
+            primaryStage.setScene(cenaPrincipal);
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Rodando o código acima, vamos ver que conseguimos realizar customizações sobre os dois botões.
+
+Agora, falta, implementarmos uma customização condicional, mas deixarei isso como um desafio onde irei colocar a resposta na próxima aula.
+
 ## Aula 07 - Contador #05:
+
 
 ## Aula 08 - Trocando Scenes:
 

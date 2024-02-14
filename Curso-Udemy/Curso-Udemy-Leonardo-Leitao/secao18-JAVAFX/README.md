@@ -24,6 +24,39 @@ Scrollando para baixo, iremos encontrar a opção para Download. E clicamos nela
 Na próxima aula, vamos criar um projeto e associar esse projeto sobre essa biblioteca JavaFX que conseguimos configurar no eclipse.
 
 ## Aula 02 - Configuração do Projeto:
+Bom, configurado a nossa biblioteca, Java FX, vamos, agora, criar um novo projeto para implementarmos o Java FX nela.
+
+Vamos criar um novo projeto java "exercicios-javaFx" da seguinte forma
+
+    New -> Java Project -> Porject Name: exercicios-javaFx -> Create module-info.java file, Module name: exerciciosfx -> Finish
+
+Agora, vamos configurar a biblioteca do JavaFX, dentro dela. Então, realizamos o seguinte passo a passo
+
+    Build Path -> Configure Build Path... -> Librarires -> Seleciona "Modulepath" -> Add Library -> User Library -> Next -> JavaFX21 -> Finish -> Apply and Close
+
+Bom, agora, vamos criar um novo pacote chamado "basico" e, dentro desse pacote, criamos uma nova classe "PrimeiroFX". Agora, vamos querer que essa classe herde uma outra classe que não está ainda relacionado com o projeto. Para isso, vamos precisar fazer um requires do "javafx.controls" dentro do arquivo, module-info, da seguinte forma
+
+    module exerciciosfx {
+        requires javafx.controls;
+    }
+
+Daí, na classe, PrimeiroFX, que acabamos de criar, nela inserimos o seguinte
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.stage.Stage;
+
+    public class PrimeiroFX extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+        }
+    }
+
+Podemos acessar o código fonte das classes que pegamos de integrações externas colocando a seta do mouse em cima do nome da classe e aparecerá uma opção "Open Declaration". Clicando nela conseguimos acessar como é o código dessa classe.
 
 ## Aula 03 - Contador #01:
 

@@ -58,7 +58,211 @@ Daí, na classe, PrimeiroFX, que acabamos de criar, nela inserimos o seguinte
 
 Podemos acessar o código fonte das classes que pegamos de integrações externas colocando a seta do mouse em cima do nome da classe e aparecerá uma opção "Open Declaration". Clicando nela conseguimos acessar como é o código dessa classe.
 
+Agora, vamos realizar a seguinte complementação dentro da classe, PrimeiroFX, da seguinte forma
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.stage.Stage;
+
+    public class PrimeiroFX extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Ao executar o código acima, vamos ver que, no console, será exibido muitos erros relacionado ao reflection.
+
+Para isso, vamos ter que abrir alguns pacotes pelo módulo. Então, realizamos o seguinte
+
+    module exerciciosfx {
+        requires javafx.controls;
+        
+        opens basico;
+    }
+
+Feito isso, ao rodarmos, novamente, a classe, PrimeiroFX, vamos ver que, desta vez, ira abrir um modal com a tela tudo em preto, ou em branco para algumas pessoas, dendendo do sistema operacional.
+
+Bom, vamos realizar mais algumas implementações em cima dessa classe. No caso vamos colocar um botão nela da seguinte maneira
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class PrimeiroFX extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            Button botaoA = new Button("A");
+            Button botaoB = new Button("B");
+            Button botaoC = new Button("C");
+            
+            VBox box = new VBox();
+            box.getChildren().add(botaoA);
+            box.getChildren().add(botaoB);
+            box.getChildren().add(botaoC);
+            
+            Scene unicaCena = new Scene(box);
+            
+            primaryStage.setScene(unicaCena);
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Ao rodarmos o código acima, vamos ver que irá aparecer uma modal com os três botões, A, B e C configurados.
+
+Vamos melhorar a visualização do layout da seguinte forma
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.geometry.Pos;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class PrimeiroFX extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            Button botaoA = new Button("A");
+            Button botaoB = new Button("B");
+            Button botaoC = new Button("C");
+            
+            VBox box = new VBox();
+            box.setAlignment(Pos.CENTER);
+            box.setSpacing(10);
+            box.getChildren().add(botaoA);
+            box.getChildren().add(botaoB);
+            box.getChildren().add(botaoC);
+            
+            Scene unicaCena = new Scene(box, 200, 400);
+            
+            primaryStage.setScene(unicaCena);
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Assim, vamos conseguir obter uma visualização melhorada dos botões A, B e C com mais espaçamento.
+
+Podemos tornar a caiba de forma horizontal, mudando o "VBox" para "HBox" e colocando as escalas de "Scene" para 150 e 100
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.geometry.Pos;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.scene.layout.HBox;
+    //import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class PrimeiroFX extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            Button botaoA = new Button("A");
+            Button botaoB = new Button("B");
+            Button botaoC = new Button("C");
+            
+    //		VBox box = new VBox();
+            HBox box = new HBox();
+            box.setAlignment(Pos.CENTER);
+            box.setSpacing(10);
+            box.getChildren().add(botaoA);
+            box.getChildren().add(botaoB);
+            box.getChildren().add(botaoC);
+            
+    //		Scene unicaCena = new Scene(box, 100, 150);
+            Scene unicaCena = new Scene(box, 150, 100);
+            
+            primaryStage.setScene(unicaCena);
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Bom, até agora, só colocamos os botões, como se estivessemos realizando uma marcação das tags. Porém, vamos colocar uma ação de cada botão
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.geometry.Pos;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.scene.layout.HBox;
+    //import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class PrimeiroFX extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            Button botaoA = new Button("A");
+            Button botaoB = new Button("B");
+            Button botaoC = new Button("C");
+            
+            botaoA.setOnAction(e -> System.out.println("A"));
+            botaoB.setOnAction(e -> System.out.println("B"));
+            botaoC.setOnAction(e -> System.exit(0));
+            
+    //		VBox box = new VBox();
+            HBox box = new HBox();
+            box.setAlignment(Pos.CENTER);
+            box.setSpacing(10);
+            box.getChildren().add(botaoA);
+            box.getChildren().add(botaoB);
+            box.getChildren().add(botaoC);
+            
+    //		Scene unicaCena = new Scene(box, 100, 150);
+            Scene unicaCena = new Scene(box, 150, 100);
+            
+            primaryStage.setScene(unicaCena);
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+No caso, com as ações definidas para os botões acima, conseguimos ver que para o botão A e B, será printado os alfabeto A e B no console e, o botão C, irá fechar a tela, saindo da aplicação.
+
 ## Aula 03 - Contador #01:
+Vamos, agora, realizar o nosso segundo exercícios de contagem.
+
+
 
 ## Aula 04 - Contador #02:
 

@@ -1077,7 +1077,233 @@ Bom, basta seguir a resolução que fiz seguinte
 
 Obs: Durante a resolução desse problema, percebi que existe uma hierarquia entre cores. Ou seja, se num Label, estiver adicionado duas cores diferentes, será considerado aquela cor com a maior hierarquia. Por isso a necessidade de remover todas as classes de cores primeiro, para depois acrescentar.
 
-## Aula 08 - Trocando Scenes:
+## Aula 08 - Trocando Scenes - Alternando Telas:
+Vamos, agora, realizar um estudo de troca de telas. Ou seja, bom base de alguma ação, ocorre uma troca de tela da aplicação.
+
+Por começo, no pacote, basico, vamos criar uma classe chamado "Wizard" e ne la inserimos o seguinte
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.stage.Stage;
+
+    public class Wizard extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Bom, em seguida complementamos com o seguinte código
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.geometry.Pos;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.scene.layout.HBox;
+    import javafx.stage.Stage;
+
+    public class Wizard extends Application {
+        
+        private Stage janela;
+        private Scene passo1;
+        private Scene passo2;
+        private Scene passo3;
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            janela = primaryStage;
+            
+            criarPasso1();
+            
+            primaryStage.setScene(passo1);
+            primaryStage.setTitle("Wizard");
+            primaryStage.show();
+        }
+        
+        private void criarPasso1() {
+            Button proximoPasso = new Button("Ir p/ Passo 2 >>");
+            
+            HBox box = new HBox();
+            box.setAlignment(Pos.CENTER);
+            box.getChildren().add(proximoPasso);
+            
+            passo1 = new Scene(box, 400, 400);
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Rodando o código acima, se nada estiver errado, irá aparecer um modal com o botão "Ir p/ Passo 2 >>", da forma como definimos acima.
+
+Visto que a situação acima está funcionando, vamos repetir um processo análogo para os passos adiante
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.geometry.Pos;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.scene.layout.HBox;
+    import javafx.stage.Stage;
+
+    public class Wizard extends Application {
+        
+        private Stage janela;
+        private Scene passo1;
+        private Scene passo2;
+        private Scene passo3;
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            janela = primaryStage;
+            
+            criarPasso1();
+            criarPasso2();
+            
+            janela.setScene(passo1);
+            janela.setTitle("Wizard");
+            janela.show();
+        }
+        
+        private void criarPasso1() {
+            Button proximoPasso = new Button("Ir p/ Passo 2 >>");
+            proximoPasso.setOnAction( e -> {
+                janela.setScene(passo2);
+            });
+            
+            HBox box = new HBox();
+            box.setAlignment(Pos.CENTER);
+            box.getChildren().add(proximoPasso);
+            
+            passo1 = new Scene(box, 400, 400);
+        }
+        
+        private void criarPasso2() {
+            Button passoAnterior = new Button("<< Voltar p/ Passo 1");
+            Button proximoPasso = new Button("Ir p/ Passo 3 >>");
+            
+            HBox box = new HBox();
+            box.setAlignment(Pos.CENTER);
+            box.getChildren().add(passoAnterior);
+            box.getChildren().add(proximoPasso);
+            
+            passo2 = new Scene(box, 400, 400);
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Rodando o código acima, se nada estiver errado, clicando no botão "Ir p/ Passo 2>>" vamos conseguir ir para a outra janela onde haverá dois botões "<< Voltar p/ Passo 1" e "Ir p/ Passo 3 >>". No caso, configuramos uma ação sobre o botão "Ir p/ Passo 2". Vamos realizar a mesma coisa para os outros botões para coneguirmos controlar a ida e a volta da janela.
+
+    package basico;
+
+    import javafx.application.Application;
+    import javafx.geometry.Pos;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.scene.layout.HBox;
+    import javafx.stage.Stage;
+
+    public class Wizard extends Application {
+        
+        private Stage janela;
+        private Scene passo1;
+        private Scene passo2;
+        private Scene passo3;
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            janela = primaryStage;
+            
+            criarPasso1();
+            criarPasso2();
+            criarPasso3();
+            
+            janela.setScene(passo1);
+            janela.setTitle("Wizard :: Passo 01");
+            janela.show();
+        }
+        
+        private void criarPasso1() {
+            Button proximoPasso = new Button("Ir p/ Passo 2 >>");
+            proximoPasso.setOnAction( e -> {
+                janela.setScene(passo2);
+                janela.setTitle("Wizard :: Passo 02");
+            });
+            
+            HBox box = new HBox();
+            box.setAlignment(Pos.CENTER);
+            box.getChildren().add(proximoPasso);
+            
+            passo1 = new Scene(box, 400, 400);
+        }
+        
+        private void criarPasso2() {
+            Button passoAnterior = new Button("<< Voltar p/ Passo 1");
+            passoAnterior.setOnAction( e -> {
+                janela.setScene(passo1);
+                janela.setTitle("Wizard :: Passo 01");
+            });
+            
+            Button proximoPasso = new Button("Ir p/ Passo 3 >>");
+            proximoPasso.setOnAction(e -> {
+                janela.setScene(passo3);
+                janela.setTitle("Wizard :: Passo 03");
+            });
+            
+            HBox box = new HBox();
+            box.setAlignment(Pos.CENTER);
+            box.getChildren().add(passoAnterior);
+            box.getChildren().add(proximoPasso);
+            
+            passo2 = new Scene(box, 400, 400);
+        }
+        
+        private void criarPasso3() {
+            Button passoAnterior = new Button("<< Voltar p/ Passo 2");
+            passoAnterior.setOnAction( e -> {
+                janela.setScene(passo2);
+                janela.setTitle("Wizard :: Passo 02");
+            });
+            
+            Button proximoPasso = new Button("Finalizar!");
+            proximoPasso.setOnAction(e -> {
+                System.exit(0);
+            });
+            
+            HBox box = new HBox();
+            box.setAlignment(Pos.CENTER);
+            box.getChildren().add(passoAnterior);
+            box.getChildren().add(proximoPasso);
+            
+            passo3 = new Scene(box, 400, 400);
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Rodando o código acima, vamos conseguir, agora, alternar entre as telas e na tela que estiver escrito, Passo 03, no título, teremos o botão "Finalizar!" para conseguirmos fechar a aplicação.
 
 ## Aula 09 - Gerenciadores de Layout:
 

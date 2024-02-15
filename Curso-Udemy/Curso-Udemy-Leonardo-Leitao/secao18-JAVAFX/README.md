@@ -1306,8 +1306,235 @@ Rodando o código acima, se nada estiver errado, clicando no botão "Ir p/ Passo
 Rodando o código acima, vamos conseguir, agora, alternar entre as telas e na tela que estiver escrito, Passo 03, no título, teremos o botão "Finalizar!" para conseguirmos fechar a aplicação.
 
 ## Aula 09 - Gerenciadores de Layout:
+Bom, uma das coisas que vc precisa prestar atenção quando se trabalha com alguma biblioteca que esteja relacionada à interfaces gráficas é entender como o Layout ela é aplicado dentro dessa tecnologia, pois isso tem total relação com a forma como vc organizará os componentes visuais na tela.
+
+No caso, o Java FX, existe uma séria de gerenciadores de Layout que te ajudarão a construir as suas interfaces gráficas e é exatamente sobre isso que iremos trabalhar nessa aula.
+
+Vamos criar um novo pacote "layout" e, dentro dele, criamos uma nova classe chamado "AppLayout".
+
+No módulo do desse projeto, vamos precisar tornar esse pacote aberto para nos permitir realizar a reflection. Então, realizamos o seguinte
+
+    module exerciciosfx {
+        requires javafx.controls;
+        
+        opens basico;
+        opens layout;
+    }
+
+Agora, na classe, AppLayout, coom começo, vamos realizar a seguinte inserção
+
+    package layout;
+
+    import javafx.application.Application;
+    import javafx.stage.Stage;
+
+    public class AppLayout extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            primaryStage.setTitle("Gerenciadores de Layout");
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+A situação acima, no caso, tem como o passo inicial para verificarmos se modal está aparecendo de forma correta.
+
+Vamos criar duas classes, agora, no mesmo pacote, donde usaremos para nos facilitar na visualização dos gerenciadores de Layouts. Criamos então as classes "Quadrado" e "Caixa".
+
+Na classe, Quadrado, vamos herdar a classe "Rectangle", uma dos gerenciadores de Layout, do Java Fx da seguinte forma
+
+    package layout;
+
+    import javafx.scene.shape.Rectangle;
+
+    public class Quadrado extends Rectangle {
+
+    }
+
+E na classe, Caixa, vamos herdar a classe "HBox", um dos gerenciadores de Layout, do Java FX da seguinte forma
+
+    package layout;
+
+    import javafx.scene.layout.HBox;
+
+    public class Caixa extends HBox {
+
+    }
+
+Agora, na classe, Caixa, vamos construir os construtores padrões, bom, fazer uns preparativos, da seguinte forma
+
+    package layout;
+
+    import javafx.geometry.Insets;
+    import javafx.geometry.Pos;
+    import javafx.scene.control.Label;
+    import javafx.scene.layout.Background;
+    import javafx.scene.layout.BackgroundFill;
+    import javafx.scene.layout.CornerRadii;
+    import javafx.scene.layout.HBox;
+    import javafx.scene.paint.Color;
+
+    public class Caixa extends HBox {
+        
+        private static int i = 0;
+        
+        private String[] cores = {
+            "#c33c5e", "#39aac6", "#28d79a",
+            "#fb750e", "#6657a8", "#f9060e"
+        };
+
+        public Caixa() {
+            // Definimos as larguras e alturas de forma padrão
+            this(100, 100);
+        }
+        
+        public Caixa(int largura, int altura) {
+            setAlignment(Pos.CENTER);
+            
+            setMinWidth(largura);
+            setMinHeight(altura);
+            
+            BackgroundFill fill = new BackgroundFill(Color.web(cores[i]), CornerRadii.EMPTY, Insets.EMPTY);
+            setBackground(new Background(fill));
+            
+            i++;
+            if(i == 6) i = 0;
+        }
+        
+        public Caixa comTexto(String texto) {
+            Label label = new Label(texto);
+            getChildren().add(label);
+            return this;
+        }
+    }
+
+Agora, na classe, AppLayout, vamos realizar a seguinte implementação
+
+    package layout;
+
+    import javafx.application.Application;
+    import javafx.scene.Scene;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class AppLayout extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            VBox temp = new VBox();
+            temp.getChildren().add(new Caixa().comTexto("1"));
+            temp.getChildren().add(new Caixa().comTexto("2"));
+            temp.getChildren().add(new Caixa().comTexto("3"));
+            temp.getChildren().add(new Caixa().comTexto("4"));
+            
+            Scene principal = new Scene(temp, 800, 600);
+            
+            primaryStage.setScene(principal);
+            primaryStage.setTitle("Gerenciadores de Layout");
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Agora, rodando o código acima, vamos ver que a classe, Caixa, irá rodar os seus métodos e será exibido 4 caixa com cores diferentes no modal que será exibido.
+
+Agora, na classe, Quadrado, vamos realizar algo análogo com a classe, Caixa, da seguinte forma
+
+    package layout;
+
+    import javafx.geometry.Insets;
+    import javafx.geometry.Pos;
+    import javafx.scene.control.Label;
+    import javafx.scene.layout.Background;
+    import javafx.scene.layout.BackgroundFill;
+    import javafx.scene.layout.CornerRadii;
+    import javafx.scene.paint.Color;
+    import javafx.scene.shape.Rectangle;
+
+    public class Quadrado extends Rectangle {
+
+        private static int i = 0;
+        
+        private String[] cores = {
+            "#c33c5e", "#39aac6", "#28d79a",
+            "#fb750e", "#6657a8", "#f9060e"
+        };
+
+        public Quadrado() {
+            // Definimos as larguras e alturas de forma padrão
+            this(100, 100);
+        }
+        
+        public Quadrado(int largura, int altura) {
+            
+            setWidth(largura);
+            setHeight(altura);
+            
+            setFill(Color.web(cores[i]));
+            
+            i++;
+            if(i == 6) i = 0;
+        }
+    }
+
+Agora,  na classe, AppLayout, vamos realizar o seguinte para testar se conseguimos instanciar direito a classe, Quadrado, da seguinte forma
+
+    package layout;
+
+    import javafx.application.Application;
+    import javafx.scene.Scene;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class AppLayout extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            VBox temp = new VBox();
+    //		temp.getChildren().add(new Caixa().comTexto("1"));
+    //		temp.getChildren().add(new Caixa().comTexto("2"));
+    //		temp.getChildren().add(new Caixa().comTexto("3"));
+    //		temp.getChildren().add(new Caixa().comTexto("4"));
+    //		temp.getChildren().add(new Caixa().comTexto("5"));
+    //		temp.getChildren().add(new Caixa().comTexto("6"));
+    //		temp.getChildren().add(new Caixa().comTexto("7"));
+            
+            temp.getChildren().add(new Quadrado());
+            temp.getChildren().add(new Quadrado());
+            temp.getChildren().add(new Quadrado());
+            temp.getChildren().add(new Quadrado());
+            temp.getChildren().add(new Quadrado());
+            temp.getChildren().add(new Quadrado());
+            temp.getChildren().add(new Quadrado());
+            
+            Scene principal = new Scene(temp, 800, 600);
+            
+            primaryStage.setScene(principal);
+            primaryStage.setTitle("Gerenciadores de Layout");
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Bom, até agora, só construímos apenas os preparativos. Nas próximas aulas, iremos entrar contudo na abordagem sobre gerenciamento de layout.
 
 ## Aula 10 - AnchorPane:
+
 
 ## Aula 11 - BorderPane:
 

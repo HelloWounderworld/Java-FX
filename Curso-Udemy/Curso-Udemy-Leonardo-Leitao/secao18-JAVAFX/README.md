@@ -1534,7 +1534,193 @@ Agora,  na classe, AppLayout, vamos realizar o seguinte para testar se conseguim
 Bom, até agora, só construímos apenas os preparativos. Nas próximas aulas, iremos entrar contudo na abordagem sobre gerenciamento de layout.
 
 ## Aula 10 - AnchorPane:
+Vamos, agora, utilizar o nosso primeiro gerenciador de Layout como uma forma introdutória.
 
+Utilizaremos o  AnchorPane.
+
+Vamos criar uma classe nova "TesteAnchorPane" no pacote, layout, e nela inserimos o seguinte
+
+    package layout;
+
+    import javafx.scene.layout.AnchorPane;
+
+    public class TesteAnchorPane extends AnchorPane {
+
+        public TesteAnchorPane() {
+            
+        }
+    }
+
+Agora, na classe, AppLayout, vamos realizar o seguinte
+
+    package layout;
+
+    import javafx.application.Application;
+    import javafx.scene.Scene;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class AppLayout extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+            Scene principal = new Scene(new TesteAnchorPane(), 800, 600);
+            
+            primaryStage.setScene(principal);
+            primaryStage.setTitle("Gerenciadores de Layout");
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Bom, com a forma acima, ao rodarmos código, vamos ver que aparecerá a tela em branco. No caso, como começo é indicativo de que está indo bem.
+
+Agora, na classe, TesteAnchorPane, vamos realizar a seguinte customização
+
+    package layout;
+
+    import javafx.scene.layout.AnchorPane;
+
+    public class TesteAnchorPane extends AnchorPane {
+
+        public TesteAnchorPane() {
+            
+            Quadrado q1 = new Quadrado();
+            Quadrado q2 = new Quadrado();
+            Quadrado q3 = new Quadrado();
+            Quadrado q4 = new Quadrado();
+            
+            getChildren().addAll(q1, q2, q3, q4);
+        }
+    }
+
+Agora, rodando a classe, AppLayout, vamos ver que um quadrado laranja irá aparecer no canto superior à esquerda. Basicamente, os outros 4 cores ficaram um em cima do outro e, provavelmente, por hierarquia de cor, a laranja acabou ganhando.
+
+Bom, agora, só falta realizarmos o processo de ancoragem.
+
+Então, na classe, TesteAnchorPane, iremos realiar o seguinte
+
+    package layout;
+
+    import javafx.scene.layout.AnchorPane;
+
+    public class TesteAnchorPane extends AnchorPane {
+
+        public TesteAnchorPane() {
+            
+            Quadrado q1 = new Quadrado();
+            setTopAnchor(q1, 10.0);
+		    setLeftAnchor(q1, 10.0);
+            
+            Quadrado q2 = new Quadrado();
+            setTopAnchor(q2, 10.0);
+            setRightAnchor(q2, 10.0);
+            
+            Quadrado q3 = new Quadrado();
+            setBottomAnchor(q3, 10.0);
+            setLeftAnchor(q3, 10.0);
+            
+            Quadrado q4 = new Quadrado();
+            setBottomAnchor(q4, 10.0);
+            setRightAnchor(q4, 10.0);
+            
+            getChildren().addAll(q1, q2, q3, q4);
+        }
+    }
+
+Daí, rodando, novamente, a classe, AppLayout, vamos ver que as cores dos quadradas se distribuíram uma em cada canto da tela.
+
+Note que, se ficarmos alterando o tamanho do modal com o mouse, vemos que os 4 quadrados que estão em cada canto não saem do lugar. Ficam fixos de acordo com o tamanho do modal.
+
+Agora, vamos criar um outro quadrado para tentarmos deixar ela centralizado
+
+    package layout;
+
+    import javafx.scene.layout.AnchorPane;
+
+    public class TesteAnchorPane extends AnchorPane {
+
+        public TesteAnchorPane() {
+            
+            Quadrado q1 = new Quadrado();
+            setTopAnchor(q1, 10.0);
+            setLeftAnchor(q1, 10.0);
+            
+            Quadrado q2 = new Quadrado();
+            setTopAnchor(q2, 10.0);
+            setRightAnchor(q2, 10.0);
+            
+            Quadrado q3 = new Quadrado();
+            setBottomAnchor(q3, 10.0);
+            setLeftAnchor(q3, 10.0);
+            
+            Quadrado q4 = new Quadrado();
+            setBottomAnchor(q4, 10.0);
+            setRightAnchor(q4, 10.0);
+            
+            Quadrado q5 = new Quadrado();
+            setTopAnchor(q5, 250.0);
+            setLeftAnchor(q5, 350.0);
+            
+            getChildren().addAll(q1, q2, q3, q4, q5);
+        }
+    }
+
+Bom, aparentemente, a forma acima parece que resolveu o problema. Porém, se ficarmos mudando o tamanho do modal, vamos ver que ela não faria o auto ajuste da posição central, que nem ocorre o ajuste automático nos outros 4 quadrados.
+
+Para arrumarmos isso, será necessário realizarmos o seguinte, ancorar o HBox
+
+    package layout;
+
+    import javafx.geometry.Pos;
+    import javafx.scene.layout.AnchorPane;
+    import javafx.scene.layout.HBox;
+
+    public class TesteAnchorPane extends AnchorPane {
+
+        public TesteAnchorPane() {
+            
+            Quadrado q1 = new Quadrado();
+            setTopAnchor(q1, 10.0);
+            setLeftAnchor(q1, 10.0);
+            
+            Quadrado q2 = new Quadrado();
+            setTopAnchor(q2, 10.0);
+            setRightAnchor(q2, 10.0);
+            
+            Quadrado q3 = new Quadrado();
+            setBottomAnchor(q3, 10.0);
+            setLeftAnchor(q3, 10.0);
+            
+            Quadrado q4 = new Quadrado();
+            setBottomAnchor(q4, 10.0);
+            setRightAnchor(q4, 10.0);
+            
+            Quadrado q5 = new Quadrado();
+            
+            HBox centro = new HBox();
+            centro.setAlignment(Pos.CENTER);
+            setTopAnchor(centro, 110.0);
+            setBottomAnchor(centro, 110.0);
+            setLeftAnchor(centro, 110.0);
+            setRightAnchor(centro, 110.0);
+            
+            centro.getChildren().add(q5); 
+            
+            getChildren().addAll(q1, q2, q3, q4, centro);
+        }
+    }
+
+Agora, sim, rodando, novamente, a classe, AppLayout, vamos ver que ocorrerá um autoajustte dentro do quadrado do centro, junto com os outros quadrados do canto.
+
+Basicamente, o que foi feito acima, foi em criar uma caixa cujo os vértices dessa caixa se encaixa exatamente nas respectivas posições dos vértices dos quadrados que estão em cada canto que não esteja em contato com a borda da tela. E dentro dessa caixa, colocamos o quadrado q5 e nela posicionamos exatamente como centro. Isso, nos permitiu, praticamente, fazer com que, mesmo que alterassemos o tamanho da modal, ocorresse o processo de auto-ajuste do centro.
+
+Bom, basicamente, esse foi a aula sobre Anchor Pane, que é um gerenciamento de layout que ajuda a realizar as ancoragens.
 
 ## Aula 11 - BorderPane:
 

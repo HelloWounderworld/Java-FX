@@ -11,7 +11,7 @@ public class AppLayout extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		
-		VBox temp = new VBox();
+//		VBox temp = new VBox();
 //		temp.getChildren().add(new Caixa().comTexto("1"));
 //		temp.getChildren().add(new Caixa().comTexto("2"));
 //		temp.getChildren().add(new Caixa().comTexto("3"));
@@ -20,15 +20,17 @@ public class AppLayout extends Application {
 //		temp.getChildren().add(new Caixa().comTexto("6"));
 //		temp.getChildren().add(new Caixa().comTexto("7"));
 		
-		temp.getChildren().add(new Quadrado());
-		temp.getChildren().add(new Quadrado());
-		temp.getChildren().add(new Quadrado());
-		temp.getChildren().add(new Quadrado());
-		temp.getChildren().add(new Quadrado());
-		temp.getChildren().add(new Quadrado());
-		temp.getChildren().add(new Quadrado());
+//		temp.getChildren().add(new Quadrado());
+//		temp.getChildren().add(new Quadrado());
+//		temp.getChildren().add(new Quadrado());
+//		temp.getChildren().add(new Quadrado());
+//		temp.getChildren().add(new Quadrado());
+//		temp.getChildren().add(new Quadrado());
+//		temp.getChildren().add(new Quadrado());
+//		
+//		Scene principal = new Scene(temp, 800, 600);
 		
-		Scene principal = new Scene(temp, 800, 600);
+		Scene principal = new Scene(new TesteAnchorPane(), 800, 600);
 		
 		primaryStage.setScene(principal);
 		primaryStage.setTitle("Gerenciadores de Layout");

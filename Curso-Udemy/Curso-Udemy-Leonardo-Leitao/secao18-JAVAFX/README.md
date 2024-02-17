@@ -1723,8 +1723,99 @@ Basicamente, o que foi feito acima, foi em criar uma caixa cujo os vértices des
 Bom, basicamente, esse foi a aula sobre Anchor Pane, que é um gerenciamento de layout que ajuda a realizar as ancoragens.
 
 ## Aula 11 - BorderPane:
+O Segundo gerenciador de layout que iremos trabalhar é o BorderPane, que é um gerenciador de posicionamento.
+
+Bom, como as estrutura das classes já estão prontas, então fica mais fácil de conseguirmos abordar o assunto com mais rapidez.
+
+No caso, vamos criar a seguinte classe, dentro do pacote, layout, "TesteBorderPane" e nela inserimos o seguinte
+
+    package layout;
+
+    import javafx.scene.layout.BorderPane;
+
+    public class TesteBorderPane extends BorderPane {
+
+        public TesteBorderPane() {
+            
+            Caixa c1 = new Caixa().comTexto("Topo");
+            setTop(c1);
+            
+            Caixa c2 = new Caixa().comTexto("Esquerda");
+            setLeft(c2);
+            
+            Caixa c3 = new Caixa().comTexto("Direita");
+            setRight(c3);
+            
+            Caixa c4 = new Caixa().comTexto("Fundo");
+            setBottom(c4);
+
+            Caixa c5 = new Caixa().comTexto("Área Central");
+		    setCenter(c5);
+            
+        }
+    }
+
+Na classe, AppLayout, vamos colocar o seguinte
+
+    package layout;
+
+    import javafx.application.Application;
+    import javafx.scene.Parent;
+    import javafx.scene.Scene;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class AppLayout extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+    //		VBox temp = new VBox();
+    //		temp.getChildren().add(new Caixa().comTexto("1"));
+    //		temp.getChildren().add(new Caixa().comTexto("2"));
+    //		temp.getChildren().add(new Caixa().comTexto("3"));
+    //		temp.getChildren().add(new Caixa().comTexto("4"));
+    //		temp.getChildren().add(new Caixa().comTexto("5"));
+    //		temp.getChildren().add(new Caixa().comTexto("6"));
+    //		temp.getChildren().add(new Caixa().comTexto("7"));
+            
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		
+    //		Scene principal = new Scene(temp, 800, 600);
+            
+            Parent raiz = null;
+    //		raiz = new TesteAnchorPane();
+            raiz = new TesteBorderPane();
+            
+    //		Scene principal = new Scene(new TesteAnchorPane(), 800, 600);
+    //		Scene principal = new Scene(new TesteBorderPane(), 800, 600);
+            Scene principal = new Scene(raiz, 800, 600);
+            
+            primaryStage.setScene(principal);
+            primaryStage.setTitle("Gerenciadores de Layout");
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Assim, rodando o código acima, vamos ver as customizações que realizamos na classe, TesteBorderPane, em uma modal, onde as bordas estarão preenchidas de acordo com as cores.
+
+O legal é que o tipo de gerenciador de layout, BorderPane, que estamos usando do JavaFX, nos permite que ele realize o auto-ajuste, conforme o tamanho da tela vai mudando, sem a necessidade de termos que colocar algum controle de tamanho.
+
+O BorderPane é um tipo de gerenciador de layout que está entre os mais utilizados para realizarmos as customizações dos layouts.
 
 ## Aula 12 - FlowPane:
+
 
 ## Aula 13 - GridPane:
 

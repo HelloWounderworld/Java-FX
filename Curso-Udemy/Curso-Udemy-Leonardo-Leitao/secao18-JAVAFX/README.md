@@ -2524,7 +2524,7 @@ Terminado a instalação do plugin, vamos ter que reinicializar o eclipse. Irá 
 
 Agora, vamos, novamente, realizar o passo a passo sobre o pacote, fxml, o seguinte
 
-    New -> Other -> Digite "fxml" -> Seleciona "New FXML Document" -> Next -> Name: Login -> Root Element: BorderPane - javafx.scene.layout -> Finish
+    New -> Other -> Digite "fxml" -> Seleciona "New FXML Document" -> Next -> Name: Login -> Root Element: GridPane - javafx.scene.layout -> Finish
 
 Isso irá criar um arquivo "Login.fxml" dentro do pacote, fxml.
 
@@ -2535,13 +2535,21 @@ This issue has been fixed with e(fx)clipse 3.10.0 (see commit 9a01848). For some
 You can get the latest version by using the nightly software site instead:
 
 Go to Help > Install New Software
+
 Click the Add... button beside Manage....
+
 A dialog titled Add Repository will appear, asking for a name and location.
+
 For the name field, you can insert something like e(fx)clipse nightly.
+
 For the location field, insert https://download.eclipse.org/efxclipse/updates-nightly/site/
+
 Click Add.
+
 Once done, the following list should appear:![O que deve aparecer](Correcao-FXML.png)
+
 Check all the items and click Next.
+
 The next window will show you a list of items to be installed, just click Finish and wait for it to complete the installation.
 
 Depois de feito isso, refaça a instalação do plugin para verificar se dará certo.
@@ -2552,9 +2560,91 @@ Fonte onde obtive a tal sugestão:
 
     https://stackoverflow.com/questions/74758570/cant-create-new-fxml-file-in-eclipse
 
-
+Bom, criado o arquivo, na próxima aula, iremos integrar esse arquivo ao nosso código para verificarmos que tipo de efeito conseguimos obter dela.
 
 ## Aula 18 - Adicionar Controles:
+Vamos, agora, colocar os primeiros elementos visuais em JavaFX e vamos, também, criar uma classe Java que nos vai ajudar a ligar os compoenentes dos arquivos JFX. em xml, vamos ter como ligar ela na classe Java.
+
+Bom, aqui está presente um padrão de projeto muito famoso chamado MVC (Model View Controller). No caso:
+
+- View: A interface gráfica é definida dentro do arquivo fxml, a partir de linguagens de marcações
+
+- Controller: Controlador, nos permite controlar os acessos visuais ou criar métodos que nos permitem que tipo de ação a ser realizada sobre algum elemento, como botão. Basicamente, o controler recebe ou captura as ações feita na aplicação, que é construída pelo view, e nos permite definir como processar com base dessa ação.
+
+- Model: Ficam confinadas as classes atreladas ao negócio. Ou seja, nela estão configuradas os códigos de regras de negócios que o controller, muitas vezes, chamam para realizar alguma determinada regra de negócio.
+
+Por começo, no arquivo, Login.fxml, vamos colocar o seguinte
+
+    <?xml version="1.0" encoding="UTF-8"?>
+
+    <?import javafx.scene.layout.*?>
+    <?import javafx.scene.control.*?>
+
+    <GridPane xmlns:fx="http://javafx.com/fxml/1">
+        <!-- TODO Add Nodes -->
+    </GridPane>
+
+Daí, na classe, AppFXML, realizamos a seguinte implementação
+
+    package fxml;
+
+    import java.net.URL;
+
+    import javafx.application.Application;
+    import javafx.fxml.FXMLLoader;
+    import javafx.scene.Scene;
+    import javafx.scene.layout.GridPane;
+    import javafx.stage.Stage;
+
+    public class AppFXML extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            URL arquivoFXML =getClass().getResource("/fxml/Login.fxml");
+            GridPane raiz = FXMLLoader.load(arquivoFXML);
+            
+            Scene cena = new Scene(raiz, 350, 400);
+            
+            primaryStage.setResizable(false);
+            primaryStage.setTitle("Tela de Login");
+            primaryStage.setScene(cena);
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Bom, ao rodarmos o código acima, iremos conseguir construir uma tela com o nome "Tela de Login".
+
+Em cima disso, iremos começar a implementar as customizações para conseguirmos configurar o layout da tela de login. No caso, iremos fazer isso via o arquivo, Login.fxml, da seguinte forma
+
+    <?xml version="1.0" encoding="UTF-8"?>
+
+    <?import javafx.scene.layout.*?>
+    <?import javafx.scene.control.*?>
+
+    <GridPane xmlns:fx="http://javafx.com/fxml/1">
+
+        <Label text="Seja Bem Vindo" GridPane.columnIndex="0" GridPane.rowIndex="0"></Label>
+        
+        <Label text="Email: " GridPane.columnIndex="0" GridPane.rowIndex="1"></Label>
+        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1"></TextField>
+        
+        <Label text="Senha: " GridPane.columnIndex="0" GridPane.rowIndex="2"></Label>
+        <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="2"></PasswordField>
+
+        <Button text="Entrar" GridPane.columnIndex="0" GridPane.rowIndex="3">
+            
+        </Button>
+    </GridPane>
+
+Com o código acima configurado, ao rodarmos, novamente, a classe, AppFXML, vamos conseguir verificar o layout bem básico configurado.
+
+Bom, na próxima aula, iremos configurar o lado do controller, capturando o que foi colocado de senha e email acima.
+
+Note que, primeiro estamos focando na estrutura e a sua funcionalidade. No final, iremos melhorar a parte de visualização.
 
 ## Aula 19 - Login Controller:
 

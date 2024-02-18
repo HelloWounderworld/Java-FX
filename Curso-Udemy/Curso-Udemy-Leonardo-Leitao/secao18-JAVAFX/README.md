@@ -2540,7 +2540,7 @@ A dialog titled Add Repository will appear, asking for a name and location.
 For the name field, you can insert something like e(fx)clipse nightly.
 For the location field, insert https://download.eclipse.org/efxclipse/updates-nightly/site/
 Click Add.
-Once done, the following list should appear:![O que deve aparecer](/Correcao-FXML.png)
+Once done, the following list should appear:![O que deve aparecer](Correcao-FXML.png)
 Check all the items and click Next.
 The next window will show you a list of items to be installed, just click Finish and wait for it to complete the installation.
 

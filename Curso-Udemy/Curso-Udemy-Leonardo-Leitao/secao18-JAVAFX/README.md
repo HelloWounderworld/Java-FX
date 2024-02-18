@@ -2479,6 +2479,80 @@ Como exemplo disso, seguir a seguinte complementação do código na classe, Tes
 Bom, conseguimos realizar as custmizações de layout acima.
 
 ## Aula 17 - FXML Config:
+Vamos, agora, abordar um pouco sobre FXML, que é uma linguagem de marcação similar ao HTML, que nos permite construir as interfaces gráficas.
+
+Vamos criar um novo pacote, fxml, e uma nova classe "AppFXML" e nela inserimos o seguinte
+
+    package fxml;
+
+    import javafx.application.Application;
+    import javafx.stage.Stage;
+
+    public class AppFXML extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+E no module-infos, vamos abrir esse pacote da seguinte forma e fazer um requires sobre um pacote javafx.fxml
+
+    module exerciciosfx {
+        requires javafx.controls;
+        requires javafx.fxml;
+        
+        opens basico;
+        opens layout;
+        opens fxml;
+    }
+
+Vamos querer criar um arquivo do tipo .fxml. Porém, se fizermos os passos
+
+    New -> Other -> Digitar "fxml"
+
+Vamos ver que não aparecerá nada sobre esse tipo de arquivo. Bom, teremos que configurar esse arquivo, que seria instalando um plugin seguindo o seguinte passo a passo
+
+    Help -> Eclipse MarketPlace -> Find: Javafx -> Clicar em pesquisar "Lupa" -> e(fx)clipse (versão) -> Install -> Finish -> Tela direita inferior do eclipse "Shows Background Operations in Progress View", clicando nela, irá mostrar as instalações em processo e é só esperar ela terminar
+
+Terminado a instalação do plugin, vamos ter que reinicializar o eclipse. Irá aparecer um botão "Restart Now" e é só clicar nela.
+
+Agora, vamos, novamente, realizar o passo a passo sobre o pacote, fxml, o seguinte
+
+    New -> Other -> Digite "fxml" -> Seleciona "New FXML Document" -> Next -> Name: Login -> Root Element: BorderPane - javafx.scene.layout -> Finish
+
+Isso irá criar um arquivo "Login.fxml" dentro do pacote, fxml.
+
+Obs: Haverá casos em que, no momento em que vc clicar no botão "Next", por algum motivo, ela não irá funcionar. Provavelmente, isso é devido à atualização da sua versão de eclipse e a falta de compatibilidade que isso poderia ter causado. Logo, sugerimos voltar uma versão anterior seguindo o seguinte passo a passo
+
+    This issue has been fixed with e(fx)clipse 3.10.0 (see commit 9a01848). For some reason, the version available on the Eclipse Marketplace is out of date by at least two versions already, as of writing. I'd also rather not downgrade my current version of Eclipse just to make this work.
+
+    You can get the latest version by using the nightly software site instead:
+
+    Go to Help > Install New Software
+    Click the Add... button beside Manage....
+    A dialog titled Add Repository will appear, asking for a name and location.
+    For the name field, you can insert something like e(fx)clipse nightly.
+    For the location field, insert https://download.eclipse.org/efxclipse/updates-nightly/site/
+    Click Add.
+    Once done, the following list should appear:![O que deve aparecer](/Correcao-FXML.png)
+    Check all the items and click Next.
+    The next window will show you a list of items to be installed, just click Finish and wait for it to complete the installation.
+
+Depois de feito isso, refaça a instalação do plugin para verificar se dará certo.
+
+Fonte onde obtive a tal sugestão:
+
+    https://github.com/eclipse-efx/efxclipse-eclipse/issues/92
+
+    https://stackoverflow.com/questions/74758570/cant-create-new-fxml-file-in-eclipse
+
+
 
 ## Aula 18 - Adicionar Controles:
 

@@ -20,13 +20,25 @@ public class Quadrado extends Rectangle {
 
 	public Quadrado() {
 		// Definimos as larguras e alturas de forma padrão
-		this(100, 100);
+//		this(100, 100);
+		this(100);
 	}
 	
-	public Quadrado(int largura, int altura) {
+//	public Quadrado(int largura, int altura) {
+//		
+//		setWidth(largura);
+//		setHeight(altura);
+//		
+//		setFill(Color.web(cores[i]));
+//		
+//		i++;
+//		if(i == 6) i = 0;
+//	}
+	
+	public Quadrado(int tamanho) {
 		
-		setWidth(largura);
-		setHeight(altura);
+		setWidth(tamanho);
+		setHeight(tamanho);
 		
 		setFill(Color.web(cores[i]));
 		

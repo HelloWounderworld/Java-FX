@@ -2093,11 +2093,390 @@ Bom, claro, que conseguirmos manipular, além das posições dos quadrados, o ta
     }
 
 ## Aula 14 - StackPane #01:
+Vamos, agora, falar sobre o gerenciador de layout, StackPane, que é uma forma de organizar as telas em pilhas.
 
+No caso, no pacote, layout, vamos criar a classe "TesteStackPane" e nela inserimos o seguinte
 
-## Aula 15 - StackPane #02:
+    package layout;
+
+    import javafx.scene.layout.StackPane;
+
+    public class TesteStackPane extends StackPane {
+
+        public TesteStackPane() {
+            
+            Caixa c1 = new Caixa().comTexto("1");
+            Caixa c2 = new Caixa().comTexto("2");
+            Caixa c3 = new Caixa().comTexto("3");
+            Caixa c4 = new Caixa().comTexto("4");
+            Caixa c5 = new Caixa().comTexto("5");
+            Caixa c6 = new Caixa().comTexto("6");
+            
+            getChildren().addAll(c1, c2, c3, c4, c5, c6);
+            
+            setOnMouseClicked( e -> {
+                System.out.println("click");
+            });
+        }
+    }
+
+Ajustamos as instância dentro da classe, AppLayout, da seguinte forma
+
+    package layout;
+
+    import javafx.application.Application;
+    import javafx.scene.Parent;
+    import javafx.scene.Scene;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class AppLayout extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+    //		VBox temp = new VBox();
+    //		temp.getChildren().add(new Caixa().comTexto("1"));
+    //		temp.getChildren().add(new Caixa().comTexto("2"));
+    //		temp.getChildren().add(new Caixa().comTexto("3"));
+    //		temp.getChildren().add(new Caixa().comTexto("4"));
+    //		temp.getChildren().add(new Caixa().comTexto("5"));
+    //		temp.getChildren().add(new Caixa().comTexto("6"));
+    //		temp.getChildren().add(new Caixa().comTexto("7"));
+            
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		
+    //		Scene principal = new Scene(temp, 800, 600);
+            
+            Parent raiz = null;
+    //		raiz = new TesteAnchorPane();
+    //		raiz = new TesteBorderPane();
+    //		raiz = new TesteFlowPane();
+    //		raiz = new TesteGridPane();
+            raiz = new TesteStackPane();
+            
+    //		Scene principal = new Scene(new TesteAnchorPane(), 800, 600);
+    //		Scene principal = new Scene(new TesteBorderPane(), 800, 600);
+            Scene principal = new Scene(raiz, 800, 600);
+            
+            primaryStage.setScene(principal);
+            primaryStage.setTitle("Gerenciadores de Layout");
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Assim, rodando o código acima, vamos ver que aparecerá a modal com a caixa 6 preenchendo a tela inteira. Isso é devido às outras caixas estarem um em cima do outro, sendo o primero a caixa 1 e o último a caixa 6.
+
+Note que, no modal que está sendo exibido a última caixa, caixa 6, quando clicamos em qualquer canto da tela, irá aparecer a msg de "click" que configuramos no setOnMouseClick.
+
+Bom, agora, vamos querer identificar se o usuário clicou no lado direito ou esquerdo da tela. Para isso, iremos realizar a seguinte complementação no código
+
+    package layout;
+
+    import javafx.scene.layout.StackPane;
+
+    public class TesteStackPane extends StackPane {
+
+        public TesteStackPane() {
+            
+            Caixa c1 = new Caixa().comTexto("1");
+            Caixa c2 = new Caixa().comTexto("2");
+            Caixa c3 = new Caixa().comTexto("3");
+            Caixa c4 = new Caixa().comTexto("4");
+            Caixa c5 = new Caixa().comTexto("5");
+            Caixa c6 = new Caixa().comTexto("6");
+            
+            getChildren().addAll(c1, c2, c3, c4, c5, c6);
+            
+            setOnMouseClicked( e -> {
+    //			System.out.println("click");
+                if(e.getSceneX() > getScene().getWidth() / 2) {
+                    System.out.println("direito");
+                } else {
+                    System.out.println("esquerdo");
+                }
+            });
+        }
+    }
+
+No caso, a forma acima, nos ajudará a identificar o lado da tela em que estaremos clicando.
+
+Bom, agora, em cima do que fizemos acima, vamos querer colocar a lógica de ficar alternando as telas definindo a esquerda, como voltar a tela, e a direita, como prosseguir para a tela seguinte. Para isso, iremos realizar a seguinte complementação
+
+    package layout;
+
+    import javafx.scene.layout.StackPane;
+
+    public class TesteStackPane extends StackPane {
+
+        public TesteStackPane() {
+            
+            Caixa c1 = new Caixa().comTexto("1");
+            Caixa c2 = new Caixa().comTexto("2");
+            Caixa c3 = new Caixa().comTexto("3");
+            Caixa c4 = new Caixa().comTexto("4");
+            Caixa c5 = new Caixa().comTexto("5");
+            Caixa c6 = new Caixa().comTexto("6");
+            
+            getChildren().addAll(c1, c2, c3, c4, c5, c6);
+            
+            setOnMouseClicked( e -> {
+    //			System.out.println("click");
+                if(e.getSceneX() > getScene().getWidth() / 2) {
+    //				System.out.println("direito");
+                    getChildren().get(0).toFront();
+                } else {
+    //				System.out.println("esquerdo");
+                    getChildren().get(5).toBack();
+                }
+            });
+        }
+    }
+
+Bom, vemos que, agora, os modais que aparecerem na tela, vamos conseguir ficar alternando de tela em tela.
+
+## Aula 15 - StackPane - Thread #02:
+Vamos, agora, criar uma Thread sobre o StackPane.
+
+No caso, Thread é o recurso que é utilizado, por exemplo, em um site de anúncio e o anúncio fica mudando para outro anúncio à um certo padrão de segundos, isso de forma automática.
+
+Na classe, TesteStackPane, realizamos o seguinte
+
+    package layout;
+
+    import javafx.application.Platform;
+    import javafx.scene.layout.StackPane;
+
+    public class TesteStackPane extends StackPane {
+
+        public TesteStackPane() {
+            
+            Caixa c1 = new Caixa().comTexto("1");
+            Caixa c2 = new Caixa().comTexto("2");
+            Caixa c3 = new Caixa().comTexto("3");
+            Caixa c4 = new Caixa().comTexto("4");
+            Caixa c5 = new Caixa().comTexto("5");
+            Caixa c6 = new Caixa().comTexto("6");
+            
+            getChildren().addAll(c2, c3, c4, c5, c6, c1);
+            
+            setOnMouseClicked( e -> {
+    //			System.out.println("click");
+                if(e.getSceneX() > getScene().getWidth() / 2) {
+    //				System.out.println("direito");
+                    getChildren().get(0).toFront();
+                } else {
+    //				System.out.println("esquerdo");
+                    getChildren().get(5).toBack();
+                }
+            });
+            
+            Thread t = new Thread(() -> {
+                while(true) {
+                    try {
+                        Thread.sleep(3000);
+                        
+                        Platform.runLater(() -> {
+                            getChildren().get(0).toFront();
+                        });
+                        
+    //					getChildren().get(0).toFront(); // Esse trecho que está dando o problema do "Not on FX application thread"
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+    //					e1.printStackTrace();
+    //					System.out.println(e.getMessage());
+                    }
+                }
+            });
+            
+            t.setDaemon(true); // Irá parar de mostrar "Not on FX Application" no console, depois que fechar a modal
+            t.start();
+        }
+    }
+
+No caso, rodando, agora, o código acima, vamos ver que a tela, a cada 3 segundos, ficará alterando as caixas, sem a necessidade de termos que ficar clicando sobre ela. O evento do click ainda estará funcionando, se clicamos sobre a tela de um dos lados.
 
 ## Aula 16 - TilePane:
+Vamos, agora, aprender sobre o gerenciador de layout, TilePane, que é o que controla as grids tbm, porém com o tamanho de cada células de forma fixa.
+
+No caso, no pacote, layout, vamos criar a classe nova "TesteTilePane" e nela inserimos o seguinte
+
+    package layout;
+
+    import java.util.ArrayList;
+    import java.util.List;
+
+    import javafx.scene.layout.TilePane;
+
+    public class TesteTilePane extends TilePane {
+
+        public TesteTilePane() {
+            
+            List<Quadrado> quadrados = new ArrayList<>();
+            
+            for(int i = 1; i < 10; i++) {
+                quadrados.add(new Quadrado(i * 10));
+            }
+
+            getChildren().addAll(quadrados);
+        }
+    }
+
+Na classe, Quadrado, vamos alterar o seguinte para ajustar com as nossas aplicações
+
+    package layout;
+
+    import javafx.geometry.Insets;
+    import javafx.geometry.Pos;
+    import javafx.scene.control.Label;
+    import javafx.scene.layout.Background;
+    import javafx.scene.layout.BackgroundFill;
+    import javafx.scene.layout.CornerRadii;
+    import javafx.scene.paint.Color;
+    import javafx.scene.shape.Rectangle;
+
+    public class Quadrado extends Rectangle {
+
+        private static int i = 0;
+        
+        private String[] cores = {
+            "#c33c5e", "#39aac6", "#28d79a",
+            "#fb750e", "#6657a8", "#f9060e"
+        };
+
+        public Quadrado() {
+            // Definimos as larguras e alturas de forma padrão
+    //		this(100, 100);
+            this(100);
+        }
+        
+    //	public Quadrado(int largura, int altura) {
+    //		
+    //		setWidth(largura);
+    //		setHeight(altura);
+    //		
+    //		setFill(Color.web(cores[i]));
+    //		
+    //		i++;
+    //		if(i == 6) i = 0;
+    //	}
+        
+        public Quadrado(int tamanho) {
+            
+            setWidth(tamanho);
+            setHeight(tamanho);
+            
+            setFill(Color.web(cores[i]));
+            
+            i++;
+            if(i == 6) i = 0;
+        }
+    }
+
+Agora, na classe, AppLayout, vamos alterar a instanciação
+
+    package layout;
+
+    import javafx.application.Application;
+    import javafx.scene.Parent;
+    import javafx.scene.Scene;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class AppLayout extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+    //		VBox temp = new VBox();
+    //		temp.getChildren().add(new Caixa().comTexto("1"));
+    //		temp.getChildren().add(new Caixa().comTexto("2"));
+    //		temp.getChildren().add(new Caixa().comTexto("3"));
+    //		temp.getChildren().add(new Caixa().comTexto("4"));
+    //		temp.getChildren().add(new Caixa().comTexto("5"));
+    //		temp.getChildren().add(new Caixa().comTexto("6"));
+    //		temp.getChildren().add(new Caixa().comTexto("7"));
+            
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		
+    //		Scene principal = new Scene(temp, 800, 600);
+            
+            Parent raiz = null;
+    //		raiz = new TesteAnchorPane();
+    //		raiz = new TesteBorderPane();
+    //		raiz = new TesteFlowPane();
+    //		raiz = new TesteGridPane();
+    //		raiz = new TesteStackPane();
+            raiz = new TesteTilePane();
+            
+    //		Scene principal = new Scene(new TesteAnchorPane(), 800, 600);
+    //		Scene principal = new Scene(new TesteBorderPane(), 800, 600);
+            Scene principal = new Scene(raiz, 800, 600);
+            
+            primaryStage.setScene(principal);
+            primaryStage.setTitle("Gerenciadores de Layout");
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Note que, agora, ao rodarmos o código acima, será exibido um modal, onde haverá quadrados que estarão aumentando de tamanho em 10 vezes sucessivamente.
+
+Bom, note que, para cada quadrado que estará sendo exibido no modal, ela estará sendo posicionado no centro de cada grid. Porém, podemos alterar as suas respectivas posições dentro dessa grid utilizando os recursos que a TilePane nos disponibiliza.
+
+Como exemplo disso, seguir a seguinte complementação do código na classe, TesteTilePane, da seguinte forma
+
+    package layout;
+
+    import java.util.ArrayList;
+    import java.util.List;
+
+    import javafx.geometry.Orientation;
+    import javafx.geometry.Pos;
+    import javafx.scene.layout.TilePane;
+
+    public class TesteTilePane extends TilePane {
+
+        public TesteTilePane() {
+            
+            List<Quadrado> quadrados = new ArrayList<>();
+            
+            for(int i = 1; i < 10; i++) {
+                quadrados.add(new Quadrado(i * 10));
+            }
+            
+            setVgap(10);
+            setHgap(10);
+            
+            setOrientation(Orientation.VERTICAL);
+            setTileAlignment(Pos.BOTTOM_RIGHT);
+            
+            getChildren().addAll(quadrados);
+        }
+    }
+
+Bom, conseguimos realizar as custmizações de layout acima.
 
 ## Aula 17 - FXML Config:
 

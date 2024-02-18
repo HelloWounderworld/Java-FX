@@ -1815,11 +1815,285 @@ O legal é que o tipo de gerenciador de layout, BorderPane, que estamos usando d
 O BorderPane é um tipo de gerenciador de layout que está entre os mais utilizados para realizarmos as customizações dos layouts.
 
 ## Aula 12 - FlowPane:
+Vamos, agora, falar sobre o gerenciador de layout chamado FlowPane.
 
+No caso, dentro do pacote, layout, vamos criar uma classe chamado "TesteFlowPane" e nela inserimos o seguinte
+
+    package layout;
+
+    import javafx.scene.layout.FlowPane;
+
+    public class TesteFlowPane extends FlowPane {
+
+        public TesteFlowPane() {
+            
+            Quadrado q1 = new Quadrado();
+            Quadrado q2 = new Quadrado();
+            Quadrado q3 = new Quadrado();
+            Quadrado q4 = new Quadrado();
+            Quadrado q5 = new Quadrado();
+            
+            getChildren().addAll(q1, q2, q3, q4, q5);
+        }
+    }
+
+Agora, na classe, AppLayout, vamos substituir a instância
+
+    package layout;
+
+    import javafx.application.Application;
+    import javafx.scene.Parent;
+    import javafx.scene.Scene;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class AppLayout extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+    //		VBox temp = new VBox();
+    //		temp.getChildren().add(new Caixa().comTexto("1"));
+    //		temp.getChildren().add(new Caixa().comTexto("2"));
+    //		temp.getChildren().add(new Caixa().comTexto("3"));
+    //		temp.getChildren().add(new Caixa().comTexto("4"));
+    //		temp.getChildren().add(new Caixa().comTexto("5"));
+    //		temp.getChildren().add(new Caixa().comTexto("6"));
+    //		temp.getChildren().add(new Caixa().comTexto("7"));
+            
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		
+    //		Scene principal = new Scene(temp, 800, 600);
+            
+            Parent raiz = null;
+    //		raiz = new TesteAnchorPane();
+    //		raiz = new TesteBorderPane();
+            raiz = new TesteFlowPane();
+            
+    //		Scene principal = new Scene(new TesteAnchorPane(), 800, 600);
+    //		Scene principal = new Scene(new TesteBorderPane(), 800, 600);
+            Scene principal = new Scene(raiz, 800, 600);
+            
+            primaryStage.setScene(principal);
+            primaryStage.setTitle("Gerenciadores de Layout");
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+Bom, rodando a classe acima, vamos ver que no modal será exibido 5 quadrados um do lado do outro. E se eu diminuo o tamanho do modal de direita para esquerda, vamos ver que os quadrados vão se posicionamento para baixo conforme a mudança.
+
+Bom, vamos utilizar, agora, algumas ferramentas para melhorar o layout de exibição usando esse gerenciador de layout, FlowPane, da seguinte forma. Na classe, TesteFlowPane, vamos colocar o seguinte
+
+    package layout;
+
+    import javafx.geometry.Insets;
+    import javafx.geometry.Orientation;
+    import javafx.geometry.Pos;
+    import javafx.scene.layout.FlowPane;
+
+    public class TesteFlowPane extends FlowPane {
+
+        public TesteFlowPane() {
+            
+            Quadrado q1 = new Quadrado();
+            Quadrado q2 = new Quadrado();
+            Quadrado q3 = new Quadrado();
+            Quadrado q4 = new Quadrado();
+            Quadrado q5 = new Quadrado();
+            
+            setHgap(10); // espaço que vc quer eixo horizontal dos elementos
+            setVgap(10); // espaçamento que vc quer no eixo vertical entre os elementos
+            setPadding(new Insets(10)); // É a mesma lógica do padding que temos em css.
+            
+            setOrientation(Orientation.VERTICAL); // Vamos conseguir posicionar os elementos no eixo vertical
+            setAlignment(Pos.CENTER_RIGHT); // O mesmo que Alignment do css
+            
+            getChildren().addAll(q1, q2, q3, q4, q5);
+        }
+    }
+
+No caso, o gerenciador de layout, FlowPane, serve para que ele siga os fluxos das mudanças que acontecem no tamanho da modal.
 
 ## Aula 13 - GridPane:
+Vamos, agora, aprender sobre o gerenciador de layout, GridPane, donde é a mesma logica de grades, linhas x colunas.
+
+No caso, no pacote, layout, vamos criar a seguinte classe nova "TesteGridPane" e nela inserimos o seguinte
+
+    package layout;
+
+    import javafx.scene.layout.ColumnConstraints;
+    import javafx.scene.layout.GridPane;
+    import javafx.scene.layout.RowConstraints;
+
+    public class TesteGridPane extends GridPane {
+
+        public TesteGridPane() {
+            
+            Caixa c1 = new Caixa().comTexto("1");
+            Caixa c2 = new Caixa().comTexto("2");
+            Caixa c3 = new Caixa().comTexto("3");
+            Caixa c4 = new Caixa().comTexto("4");
+            Caixa c5 = new Caixa().comTexto("5");
+            Caixa c6 = new Caixa().comTexto("6");
+            
+            setGridLinesVisible(true);
+            
+            getColumnConstraints().addAll(cc(), cc(), cc(), cc(), cc());
+            getRowConstraints().addAll(rc(), rc(), rc(), rc(), rc());
+            
+            add(c1, 0, 0, 2, 2); // A lógica de posicionamento é exatamente o mesmo de matriz. Temos tbm o recurso de expansão, até quantos queremos expandir, 2 ,1.
+            add(c2, 1, 1, 2, 2);
+        }
+        
+        public ColumnConstraints cc() {
+            ColumnConstraints cc = new ColumnConstraints();
+            cc.setPercentWidth(20);
+            return cc;
+        }
+        
+        private RowConstraints rc() {
+            RowConstraints rc = new RowConstraints();
+            rc.setPercentHeight(20);
+            rc.setFillHeight(true);
+            return rc;
+        }
+    }
+
+E na classe, AppLayout, vamos mudar a instância da seguinte forma
+
+    package layout;
+
+    import javafx.application.Application;
+    import javafx.scene.Parent;
+    import javafx.scene.Scene;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class AppLayout extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            // TODO Auto-generated method stub
+            
+    //		VBox temp = new VBox();
+    //		temp.getChildren().add(new Caixa().comTexto("1"));
+    //		temp.getChildren().add(new Caixa().comTexto("2"));
+    //		temp.getChildren().add(new Caixa().comTexto("3"));
+    //		temp.getChildren().add(new Caixa().comTexto("4"));
+    //		temp.getChildren().add(new Caixa().comTexto("5"));
+    //		temp.getChildren().add(new Caixa().comTexto("6"));
+    //		temp.getChildren().add(new Caixa().comTexto("7"));
+            
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		temp.getChildren().add(new Quadrado());
+    //		
+    //		Scene principal = new Scene(temp, 800, 600);
+            
+            Parent raiz = null;
+    //		raiz = new TesteAnchorPane();
+    //		raiz = new TesteBorderPane();
+    //		raiz = new TesteFlowPane();
+            raiz = new TesteGridPane();
+            
+    //		Scene principal = new Scene(new TesteAnchorPane(), 800, 600);
+    //		Scene principal = new Scene(new TesteBorderPane(), 800, 600);
+            Scene principal = new Scene(raiz, 800, 600);
+            
+            primaryStage.setScene(principal);
+            primaryStage.setTitle("Gerenciadores de Layout");
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+No caso, rodando a classe, vamos ver que a modal irá mostrar uma grade, onde nos permite realizar uma manipulação similar à uma matriz usando os recursos do GridPane.
+
+Bom, claro, que conseguirmos manipular, além das posições dos quadrados, o tamanho das grids tbm
+
+        package layout;
+
+    import javafx.scene.layout.ColumnConstraints;
+    import javafx.scene.layout.GridPane;
+    import javafx.scene.layout.RowConstraints;
+
+    public class TesteGridPane extends GridPane {
+
+        public TesteGridPane() {
+            
+            Caixa c1 = new Caixa().comTexto("1");
+            Caixa c2 = new Caixa().comTexto("2");
+            Caixa c3 = new Caixa().comTexto("3");
+            Caixa c4 = new Caixa().comTexto("4");
+            Caixa c5 = new Caixa().comTexto("5");
+            Caixa c6 = new Caixa().comTexto("6");
+            
+            setGridLinesVisible(true);
+            
+            getColumnConstraints().addAll(cc(), cc(), fcc(), cc(), cc());
+            getRowConstraints().addAll(rc(), rc(), rc(), rc(), rc());
+            
+            setVgap(10);
+            setHgap(10);
+            
+            add(c1, 0, 0, 2, 2); // A lógica de posicionamento é exatamente o mesmo de matriz. Temos tbm o recurso de expansão, até quantos queremos expandir, 2 ,1.
+            add(c2, 1, 1, 2, 2);
+            add(c3, 4, 2, 1, 3);
+            add(c4, 3, 1);
+            add(c5, 0, 4, 2, 1);
+            add(c6, 3, 3);
+        }
+        
+        public ColumnConstraints cc() {
+            ColumnConstraints cc = new ColumnConstraints();
+            cc.setPercentWidth(20);
+            return cc;
+        }
+        
+        public ColumnConstraints fcc() {
+            ColumnConstraints cc = new ColumnConstraints();
+            cc.setMinWidth(50);
+            cc.setMaxWidth(50);
+            cc.setFillWidth(true);
+            return cc;
+        }
+        
+        private RowConstraints rc() {
+            RowConstraints rc = new RowConstraints();
+            rc.setPercentHeight(20);
+            rc.setFillHeight(true);
+            return rc;
+        }
+        
+        private RowConstraints frc() {
+            RowConstraints rc = new RowConstraints();
+            rc.setMinHeight(20);
+            rc.setMaxHeight(20);
+            rc.setFillHeight(true);
+            return rc;
+        }
+    }
 
 ## Aula 14 - StackPane #01:
+
 
 ## Aula 15 - StackPane #02:
 

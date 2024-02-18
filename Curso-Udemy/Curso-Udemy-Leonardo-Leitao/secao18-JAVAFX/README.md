@@ -2530,19 +2530,19 @@ Isso irá criar um arquivo "Login.fxml" dentro do pacote, fxml.
 
 Obs: Haverá casos em que, no momento em que vc clicar no botão "Next", por algum motivo, ela não irá funcionar. Provavelmente, isso é devido à atualização da sua versão de eclipse e a falta de compatibilidade que isso poderia ter causado. Logo, sugerimos voltar uma versão anterior seguindo o seguinte passo a passo
 
-    This issue has been fixed with e(fx)clipse 3.10.0 (see commit 9a01848). For some reason, the version available on the Eclipse Marketplace is out of date by at least two versions already, as of writing. I'd also rather not downgrade my current version of Eclipse just to make this work.
+This issue has been fixed with e(fx)clipse 3.10.0 (see commit 9a01848). For some reason, the version available on the Eclipse Marketplace is out of date by at least two versions already, as of writing. I'd also rather not downgrade my current version of Eclipse just to make this work.
 
-    You can get the latest version by using the nightly software site instead:
+You can get the latest version by using the nightly software site instead:
 
-    Go to Help > Install New Software
-    Click the Add... button beside Manage....
-    A dialog titled Add Repository will appear, asking for a name and location.
-    For the name field, you can insert something like e(fx)clipse nightly.
-    For the location field, insert https://download.eclipse.org/efxclipse/updates-nightly/site/
-    Click Add.
-    Once done, the following list should appear:![O que deve aparecer](/Correcao-FXML.png)
-    Check all the items and click Next.
-    The next window will show you a list of items to be installed, just click Finish and wait for it to complete the installation.
+Go to Help > Install New Software
+Click the Add... button beside Manage....
+A dialog titled Add Repository will appear, asking for a name and location.
+For the name field, you can insert something like e(fx)clipse nightly.
+For the location field, insert https://download.eclipse.org/efxclipse/updates-nightly/site/
+Click Add.
+Once done, the following list should appear:![O que deve aparecer](/Correcao-FXML.png)
+Check all the items and click Next.
+The next window will show you a list of items to be installed, just click Finish and wait for it to complete the installation.
 
 Depois de feito isso, refaça a instalação do plugin para verificar se dará certo.
 

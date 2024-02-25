@@ -2956,6 +2956,104 @@ Bom, basta rodar a classe, LoginControlador, para verificarmos que a mudança fo
 ## Aula 21 - Ajustando Layout:
 Bom, agora, vamos tentar ajustar o layout da aplicação, pois, vemos que elas estão todas grudadas ao lado esquerdo.
 
+No caso, no arquivo, Login.fxml, vamos colocar o seguinte
+
+    <?xml version="1.0" encoding="UTF-8"?>
+
+    <?import javafx.geometry.Insets?>
+    <?import javafx.scene.layout.*?>
+    <?import javafx.scene.control.*?>
+
+    <GridPane xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="fxml.LoginControlador"
+        styleClass="login" hgap="15" vgap="15">
+        
+        <padding>
+            <Insets left="40" right="40" top="40" />
+        </padding>
+
+        <Label text="Seja Bem Vindo" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="login-titulo"></Label>
+        
+        <Label styleClass="login-form-label" text="Email: " GridPane.columnIndex="0" GridPane.rowIndex="1"></Label>
+        <TextField fx:id="campoEmail" GridPane.columnIndex="1" GridPane.rowIndex="1"></TextField>
+        
+        <Label styleClass="login-form-label" text="Senha: " GridPane.columnIndex="0" GridPane.rowIndex="2"></Label>
+        <PasswordField fx:id="campoSenha" GridPane.columnIndex="1" GridPane.rowIndex="2"></PasswordField>
+
+        <Button styleClass="login-form-botao" text="Entrar" GridPane.columnIndex="0" GridPane.rowIndex="3" onAction="#entrar">
+            
+        </Button>
+    </GridPane>
+
+Por começo, colocamos "hgap", "vgap" e a tag, padding, e dentro dela usamos o "Insets" e importamos esse pacote. Feito essa mudança, se rodarmos, agora, o projeto para verificarmos como ficou a aplicação, vamos ver que foi ajustado os espaçamentos de cada campo.
+
+Presseguimos com as seguintes mudanças
+
+    <?xml version="1.0" encoding="UTF-8"?>
+
+    <?import javafx.geometry.Insets?>
+    <?import javafx.scene.layout.*?>
+    <?import javafx.scene.control.*?>
+
+    <GridPane xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="fxml.LoginControlador"
+        styleClass="login" hgap="15" vgap="15">
+        
+        <padding>
+            <Insets left="40" right="40" top="40" />
+        </padding>
+
+        <Label text="Seja Bem Vindo" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" styleClass="login-titulo"></Label>
+        
+        <Label styleClass="login-form-label" text="Email: " GridPane.columnIndex="0" GridPane.rowIndex="1"></Label>
+        <TextField fx:id="campoEmail" GridPane.columnIndex="1" GridPane.rowIndex="1"></TextField>
+        
+        <Label styleClass="login-form-label" text="Senha: " GridPane.columnIndex="0" GridPane.rowIndex="2"></Label>
+        <PasswordField fx:id="campoSenha" GridPane.columnIndex="1" GridPane.rowIndex="2"></PasswordField>
+
+        <Button styleClass="login-form-botao" text="Entrar" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" onAction="#entrar">
+            
+        </Button>
+    </GridPane>
+
+Basicamente, implementamos o "GridPane.columnSpan" e "GridPane.halignment" para melhorarmos a nossa visualização nas tags label, para título, e Button.
+
+Agora, vamos colocar as constrants para melhorarmos o posicionamento
+
+    <?xml version="1.0" encoding="UTF-8"?>
+
+    <?import javafx.geometry.Insets?>
+    <?import javafx.scene.layout.*?>
+    <?import javafx.scene.control.*?>
+
+    <GridPane xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="fxml.LoginControlador"
+        styleClass="login" hgap="15" vgap="15">
+        
+        <padding>
+            <Insets left="40" right="40" top="40" />
+        </padding>
+        
+        <columnConstraints>
+            <ColumnConstraints minWidth="60" prefWidth="60" halignment="right" />
+            <ColumnConstraints prefWidth="200" maxWidth="Infinity" hgrow="ALWAYS" />
+        </columnConstraints>
+
+        <Label text="Seja Bem Vindo" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" styleClass="login-titulo"></Label>
+        
+        <Label styleClass="login-form-label" text="E-mail:" GridPane.columnIndex="0" GridPane.rowIndex="1"></Label>
+        <TextField fx:id="campoEmail" GridPane.columnIndex="1" GridPane.rowIndex="1"></TextField>
+        
+        <Label styleClass="login-form-label" text="Senha:" GridPane.columnIndex="0" GridPane.rowIndex="2"></Label>
+        <PasswordField fx:id="campoSenha" GridPane.columnIndex="1" GridPane.rowIndex="2"></PasswordField>
+
+        <Button styleClass="login-form-botao" text="Entrar" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" onAction="#entrar">
+            
+        </Button>
+    </GridPane>
+
+Bom, rodando, agora, a classe, vamos ver que conseguimos verificar que foi feito o ajuste necessário.
+
 ## Aula 22 - Adicionando Margens:
 
 ## Aula 23 - Usando ControlsFX:

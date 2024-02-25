@@ -3055,7 +3055,110 @@ Agora, vamos colocar as constrants para melhorarmos o posicionamento
 Bom, rodando, agora, a classe, vamos ver que conseguimos verificar que foi feito o ajuste necessário.
 
 ## Aula 22 - Adicionando Margens:
+Vamos, agora, adicionar margens para melhorarmos o espaçamento das bordas do layout da aplicação.
+
+Bom, para isso, no arquivo, Login.fxml, na tag Label, que faz o título, vamos colocar o seguinte
+
+    <?xml version="1.0" encoding="UTF-8"?>
+
+    <?import javafx.geometry.Insets?>
+    <?import javafx.scene.layout.*?>
+    <?import javafx.scene.control.*?>
+
+    <GridPane xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="fxml.LoginControlador"
+        styleClass="login" hgap="15" vgap="15">
+        
+        <padding>
+            <Insets left="40" right="40" top="40" />
+        </padding>
+        
+        <columnConstraints>
+            <ColumnConstraints minWidth="60" prefWidth="60" halignment="right" />
+            <ColumnConstraints prefWidth="200" maxWidth="Infinity" hgrow="ALWAYS" />
+        </columnConstraints>
+
+        <Label text="Seja Bem Vindo" 
+            GridPane.columnIndex="0" 
+            GridPane.rowIndex="0" 
+            GridPane.columnSpan="2" 
+            GridPane.halignment="CENTER" 
+            styleClass="login-titulo">
+            
+            <GridPane.margin>
+                <Insets top="20" bottom="20" />
+            </GridPane.margin>
+        </Label>
+        
+        <Label styleClass="login-form-label" text="E-mail:" GridPane.columnIndex="0" GridPane.rowIndex="1"></Label>
+        <TextField fx:id="campoEmail" GridPane.columnIndex="1" GridPane.rowIndex="1"></TextField>
+        
+        <Label styleClass="login-form-label" text="Senha:" GridPane.columnIndex="0" GridPane.rowIndex="2"></Label>
+        <PasswordField fx:id="campoSenha" GridPane.columnIndex="1" GridPane.rowIndex="2"></PasswordField>
+
+        <Button styleClass="login-form-botao" text="Entrar" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" onAction="#entrar">
+        </Button>
+    </GridPane>
+
+No caso, ao rodarmos o projeto com a alteração acima, vamos ver que o título vai ficar mais espaçado com relação aos outros campos.
+
+Realizemos a mesma coisa para a tag Button para colocarmos mais espaçamento
+
+    <?xml version="1.0" encoding="UTF-8"?>
+
+    <?import javafx.geometry.Insets?>
+    <?import javafx.scene.layout.*?>
+    <?import javafx.scene.control.*?>
+
+    <GridPane xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="fxml.LoginControlador"
+        styleClass="login" hgap="15" vgap="15">
+        
+        <padding>
+            <Insets left="40" right="40" top="40" />
+        </padding>
+        
+        <columnConstraints>
+            <ColumnConstraints minWidth="60" prefWidth="60" halignment="right" />
+            <ColumnConstraints prefWidth="200" maxWidth="Infinity" hgrow="ALWAYS" />
+        </columnConstraints>
+
+        <Label text="Seja Bem Vindo" 
+            GridPane.columnIndex="0" 
+            GridPane.rowIndex="0" 
+            GridPane.columnSpan="2" 
+            GridPane.halignment="CENTER" 
+            styleClass="login-titulo">
+            
+            <GridPane.margin>
+                <Insets top="20" bottom="20" />
+            </GridPane.margin>
+        </Label>
+        
+        <Label styleClass="login-form-label" text="E-mail:" GridPane.columnIndex="0" GridPane.rowIndex="1"></Label>
+        <TextField fx:id="campoEmail" GridPane.columnIndex="1" GridPane.rowIndex="1"></TextField>
+        
+        <Label styleClass="login-form-label" text="Senha:" GridPane.columnIndex="0" GridPane.rowIndex="2"></Label>
+        <PasswordField fx:id="campoSenha" GridPane.columnIndex="1" GridPane.rowIndex="2"></PasswordField>
+
+        <Button styleClass="login-form-botao"
+            text="Entrar" GridPane.columnIndex="0"
+            GridPane.rowIndex="3"
+            GridPane.columnSpan="2"
+            GridPane.halignment="CENTER"
+            onAction="#entrar">
+            
+            <GridPane.margin>
+                <Insets top="20" bottom="20" />
+            </GridPane.margin>
+        </Button>
+    </GridPane>
+
+Bom, assim, conseguimos melhorar o espaçamento do botão "Entrar" também.
 
 ## Aula 23 - Usando ControlsFX:
+Vamos, agora, partir para a última parte desse aplicativo de "Login".
+
+Iremos implementar a biblioteca ControlsFX para conseguirmos mostrar se o "Login" deu sucesso ou não.
 
 ## Aula 24 - Calculadora:

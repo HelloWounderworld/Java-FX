@@ -3324,3 +3324,4 @@ Se quisermos podemos mudar a posição de exibição dessa modal da seguinte for
 Bom, essa biblioteca, tem vários componentes visuais, então, vale a pena dar uma atenção especial para ela nos seus estudos.
 
 ## Aula 24 - Calculadora:
+Seguir o projeto, calculadora.

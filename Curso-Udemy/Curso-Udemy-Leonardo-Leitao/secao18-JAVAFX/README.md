@@ -3161,4 +3161,166 @@ Vamos, agora, partir para a última parte desse aplicativo de "Login".
 
 Iremos implementar a biblioteca ControlsFX para conseguirmos mostrar se o "Login" deu sucesso ou não.
 
+Primeiro, vamos configurar a lógica de entrada e saída do Login e tbm a configuração do ControlsFX.
+
+Bom, na classe, LoginControlador, no método, entrar, realizamos o seguinte
+
+    package fxml;
+
+    import javafx.fxml.FXML;
+    import javafx.scene.control.PasswordField;
+    import javafx.scene.control.TextField;
+
+    public class LoginControlador {
+
+        @FXML // - Estou dizendo que ele pertence ao arquivo fxml
+        private TextField campoEmail;
+        
+        @FXML
+        private PasswordField campoSenha;
+        
+        public void entrar() {
+            boolean emailValido = campoEmail.getText().equals("student@mathcoder.com.jp");
+            boolean senhaValida = campoSenha.getText().equals("zfc++");
+    //		System.out.println("Entrar...");
+    //		System.out.println(campoEmail);
+    //		System.out.println(campoEmail.getText());
+    //		System.out.println(campoSenha);
+    //		System.out.println(campoSenha.getText());
+            
+            if(emailValido && senhaValida) {
+                System.out.println("Sucesso");
+            } else {
+                System.out.println("Falhou");
+            }
+        }
+    }
+
+Daí, rodando a classe acima, vamos conseguir testar se deu sucesso ou não a entrada do login. Note que, se colocarmos o email e a senha certa, vamos garantir que o Login se bem se sucedeu.
+
+Agora, vamos configurar o ControlsFX para o nosso projeto. Para isso, será necessário baixar um arquivo .jar no seguinte link
+
+    https://github.com/controlsfx/controlsfx
+
+Dentro desse link procuramos pela "Releases" e nela teremos a versão e no google digitamos
+
+    "controlsfx 11.2.0 jar"
+
+E nela, o primeiro link que aparecer irá direcionar para a página do Maven que dê para fazer os downloads
+
+    https://mvnrepository.com/artifact/org.controlsfx/controlsfx/11.2.0
+
+Em "files" vamos baixar o arquivo ".jar".
+
+Agora, dentro do nosso projeto, exercicios-javaFx, nela criamos uma pasta "lib" e dentro dessa pasta colocamos o arquivo ".jar" que baixamos.
+
+Dando o "Refresh" no projeto, exercicios-javaFx, vamos, agora, importar esse arquivo ".jar" que baixamos com o seguinte passo a passo
+
+    Sobre o arquivo ".jar" com o botão direito -> Build Path -> Add Build Path
+
+Feito isso, agora, no arquivo, module-info, nela iremos fazer o require dessa biblioteca que configuramos
+
+    module exerciciosfx {
+        requires javafx.controls;
+        requires javafx.fxml;
+        requires org.controlsfx.controls;
+        
+        opens basico;
+        opens layout;
+        opens fxml;
+    }
+
+Agora, dentro da classe, LoginControlador, vamos colocar o seguinte
+
+    package fxml;
+
+    import org.controlsfx.control.Notifications;
+
+    import javafx.fxml.FXML;
+    import javafx.scene.control.PasswordField;
+    import javafx.scene.control.TextField;
+
+    public class LoginControlador {
+
+        @FXML // - Estou dizendo que ele pertence ao arquivo fxml
+        private TextField campoEmail;
+        
+        @FXML
+        private PasswordField campoSenha;
+        
+        public void entrar() {
+            boolean emailValido = campoEmail.getText().equals("student@mathcoder.com.jp");
+            boolean senhaValida = campoSenha.getText().equals("zfc++");
+    //		System.out.println("Entrar...");
+    //		System.out.println(campoEmail);
+    //		System.out.println(campoEmail.getText());
+    //		System.out.println(campoSenha);
+    //		System.out.println(campoSenha.getText());
+            
+            if(emailValido && senhaValida) {
+    //			System.out.println("Sucesso");
+                Notifications.create()
+                    .title("Login FXML")
+                    .text("Login efetuado com sucesso!")
+                    .showInformation();
+            } else {
+    //			System.out.println("Falhou");
+                Notifications.create()
+                .title("Login FXML")
+                .text("Usuario ou senha inválido!")
+                .showError();
+            }
+        }
+    }
+
+Ao rodarmos a aplicação, vamos ver que colocando o usuário ou senha errado, o modal de aviso que configuramos acima será exibido no canto direito inferior da tela.
+
+Se quisermos podemos mudar a posição de exibição dessa modal da seguinte forma
+
+    package fxml;
+
+    import org.controlsfx.control.Notifications;
+
+    import javafx.fxml.FXML;
+    import javafx.geometry.Pos;
+    import javafx.scene.control.PasswordField;
+    import javafx.scene.control.TextField;
+
+    public class LoginControlador {
+
+        @FXML // - Estou dizendo que ele pertence ao arquivo fxml
+        private TextField campoEmail;
+        
+        @FXML
+        private PasswordField campoSenha;
+        
+        public void entrar() {
+            boolean emailValido = campoEmail.getText().equals("student@mathcoder.com.jp");
+            boolean senhaValida = campoSenha.getText().equals("zfc++");
+    //		System.out.println("Entrar...");
+    //		System.out.println(campoEmail);
+    //		System.out.println(campoEmail.getText());
+    //		System.out.println(campoSenha);
+    //		System.out.println(campoSenha.getText());
+            
+            if(emailValido && senhaValida) {
+    //			System.out.println("Sucesso");
+                Notifications.create()
+                    .position(Pos.TOP_RIGHT)
+                    .title("Login FXML")
+                    .text("Login efetuado com sucesso!")
+                    .showInformation();
+            } else {
+    //			System.out.println("Falhou");
+                Notifications.create()
+                    .position(Pos.TOP_RIGHT)
+                    .title("Login FXML")
+                    .text("Usuario ou senha inválido!")
+                    .showError();
+            }
+        }
+    }
+
+Bom, essa biblioteca, tem vários componentes visuais, então, vale a pena dar uma atenção especial para ela nos seus estudos.
+
 ## Aula 24 - Calculadora:

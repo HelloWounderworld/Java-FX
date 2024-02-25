@@ -2790,7 +2790,171 @@ Vamos, agora, melhorar a qualidade visual da nossa aplicação.
 
 Até, agora, focamos somente nas estruturas focadas à funcionalidade. Feito a arquitetura, vamos, então, melhorar a visualização dessa estrutura usando o css com FXML.
 
+Bom, para o começo vamos criar o arquivo, Login.css, dentro do pacote, fxml. E dentro desse arquivo colocamos o seguinte
+
+    .login {
+        -fx-background-color: red;
+    }
+
+Agora, na classe, AppFXML, vamos ter que fazer reconhecer esse arquivo da seguinte forma
+
+    package fxml;
+
+    import java.net.URL;
+
+    import javafx.application.Application;
+    import javafx.fxml.FXMLLoader;
+    import javafx.scene.Scene;
+    import javafx.scene.layout.GridPane;
+    import javafx.stage.Stage;
+
+    public class AppFXML extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            String arquivoCSS = getClass().getResource("/fxml/Login.css").toExternalForm();
+            URL arquivoFXML =getClass().getResource("/fxml/Login.fxml");
+            GridPane raiz = FXMLLoader.load(arquivoFXML);
+            
+            Scene cena = new Scene(raiz, 350, 400);
+            cena.getStylesheets().add(arquivoCSS);
+            
+            primaryStage.setResizable(false);
+            primaryStage.setTitle("Tela de Login");
+            primaryStage.setScene(cena);
+            primaryStage.show();
+        }
+        
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+
+No caso, incluímos a string "arquivoCSS" que mostra a path onde o arquivo, Login.css, está localizado e aplicamos, cena.getStylesheets().add(arquivoCSS), para conseguirmos capturar o arquivo. Agora, podemos ir no arquivo, Login.fxml, e nela implementar os css que definidmos dentro do arquivo, Login.css, da seguinte forma
+
+    <?xml version="1.0" encoding="UTF-8"?>
+
+    <?import javafx.scene.layout.*?>
+    <?import javafx.scene.control.*?>
+
+    <GridPane xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="fxml.LoginControlador"
+        styleClass="login">
+
+        <Label text="Seja Bem Vindo" GridPane.columnIndex="0" GridPane.rowIndex="0"></Label>
+        
+        <Label text="Email: " GridPane.columnIndex="0" GridPane.rowIndex="1"></Label>
+        <TextField fx:id="campoEmail" GridPane.columnIndex="1" GridPane.rowIndex="1"></TextField>
+        
+        <Label text="Senha: " GridPane.columnIndex="0" GridPane.rowIndex="2"></Label>
+        <PasswordField fx:id="campoSenha" GridPane.columnIndex="1" GridPane.rowIndex="2"></PasswordField>
+
+        <Button text="Entrar" GridPane.columnIndex="0" GridPane.rowIndex="3" onAction="#entrar">
+            
+        </Button>
+    </GridPane>
+
+No caso, queremos aplicar o layout, login, que definimos dentro do arquivo, Login.css, na aplicação inteira. Então, no "GridPane" usamos o "styleClass" e nela apontamos o css que definimos.
+
+Agora, rodando o arquivo, vamos ver que a modal está capturando a cor "red" que definimos no css.
+
+Existe um link, uiGradients, que lá podemos pegar as cores que queremos no formato rgb
+
+    https://uigradients.com/#MinimalRed
+
+Dela, peguei a seguinte cor, ao inspecionar a pagina e coloquei dentro do, Login.css
+
+    .login {
+        -fx-background-color: linear-gradient(to right, rgb(179, 255, 171), rgb(18, 255, 247))
+    }
+
+Agora, novamente, se rodarmos a classe, vamos ver que a aplicação, agora, estará nessa cor acima.
+
+Bom, agora, vamos definir mais classes dentro do arquivo, Login.css
+
+    .login {
+        -fx-background-color: linear-gradient(to right, rgb(179, 255, 171), rgb(18, 255, 247))
+    }
+
+    .login-titulo {
+        -fx-font-size: 20px;
+        -fx-text-fill: #FFF;
+    }
+
+Basicamente, agora, falta aplicarmos essa classe, login-titulo, que definimos dentro do arquivo, Login.fxml, da seguinte forma
+
+    <?xml version="1.0" encoding="UTF-8"?>
+
+    <?import javafx.scene.layout.*?>
+    <?import javafx.scene.control.*?>
+
+    <GridPane xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="fxml.LoginControlador"
+        styleClass="login">
+
+        <Label text="Seja Bem Vindo" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="login-titulo"></Label>
+        
+        <Label text="Email: " GridPane.columnIndex="0" GridPane.rowIndex="1"></Label>
+        <TextField fx:id="campoEmail" GridPane.columnIndex="1" GridPane.rowIndex="1"></TextField>
+        
+        <Label text="Senha: " GridPane.columnIndex="0" GridPane.rowIndex="2"></Label>
+        <PasswordField fx:id="campoSenha" GridPane.columnIndex="1" GridPane.rowIndex="2"></PasswordField>
+
+        <Button text="Entrar" GridPane.columnIndex="0" GridPane.rowIndex="3" onAction="#entrar">
+            
+        </Button>
+    </GridPane>
+
+No label, colocamos o "styleClass" para identificar essa classe que definimos.
+
+Bom, dessa forma, vamos definir mais outras classes dentro do, Login.css, da seguinte forma
+
+    .login {
+        -fx-background-color: linear-gradient(to right, rgb(20, 136, 204), rgb(43, 50, 178))
+    }
+
+    .login-titulo {
+        -fx-font-size: 20px;
+        -fx-text-fill: #FFF;
+    }
+
+    .login-form-label {
+        -fx-font-size: 16px;
+        -fx-text-fill: #FFF;
+    }
+
+    .login-form-botao {
+        -fx-font-size: 16px;
+    }
+
+Agora, apliquemos-las dentro do arquivo, Login.fxml, da seguinte forma
+
+    <?xml version="1.0" encoding="UTF-8"?>
+
+    <?import javafx.scene.layout.*?>
+    <?import javafx.scene.control.*?>
+
+    <GridPane xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="fxml.LoginControlador"
+        styleClass="login">
+
+        <Label text="Seja Bem Vindo" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="login-titulo"></Label>
+        
+        <Label styleClass="login-form-label" text="Email: " GridPane.columnIndex="0" GridPane.rowIndex="1"></Label>
+        <TextField fx:id="campoEmail" GridPane.columnIndex="1" GridPane.rowIndex="1"></TextField>
+        
+        <Label styleClass="login-form-label" text="Senha: " GridPane.columnIndex="0" GridPane.rowIndex="2"></Label>
+        <PasswordField fx:id="campoSenha" GridPane.columnIndex="1" GridPane.rowIndex="2"></PasswordField>
+
+        <Button styleClass="login-form-botao" text="Entrar" GridPane.columnIndex="0" GridPane.rowIndex="3" onAction="#entrar">
+            
+        </Button>
+    </GridPane>
+
+Bom, basta rodar a classe, LoginControlador, para verificarmos que a mudança foi capturada.
+
 ## Aula 21 - Ajustando Layout:
+Bom, agora, vamos tentar ajustar o layout da aplicação, pois, vemos que elas estão todas grudadas ao lado esquerdo.
 
 ## Aula 22 - Adicionando Margens:
 

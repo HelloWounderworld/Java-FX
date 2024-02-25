@@ -2647,8 +2647,148 @@ Bom, na próxima aula, iremos configurar o lado do controller, capturando o que 
 Note que, primeiro estamos focando na estrutura e a sua funcionalidade. No final, iremos melhorar a parte de visualização.
 
 ## Aula 19 - Login Controller:
+Vamos, agora, mostrar como construir um controller para entendermos melhor sobre a ideia de como o Controller ele funciona como um intermediador dentro dentro do conceito de MVC.
+
+No caso, no pacote, fxml, vamos criar uma nova classe "LoginControlador". Agora, no arquivo, Login.fxml, vamos colocar o seguinte
+
+    <?xml version="1.0" encoding="UTF-8"?>
+
+    <?import javafx.scene.layout.*?>
+    <?import javafx.scene.control.*?>
+
+    <GridPane xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="fxml.LoginControlador">
+
+        <Label text="Seja Bem Vindo" GridPane.columnIndex="0" GridPane.rowIndex="0"></Label>
+        
+        <Label text="Email: " GridPane.columnIndex="0" GridPane.rowIndex="1"></Label>
+        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1"></TextField>
+        
+        <Label text="Senha: " GridPane.columnIndex="0" GridPane.rowIndex="2"></Label>
+        <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="2"></PasswordField>
+
+        <Button text="Entrar" GridPane.columnIndex="0" GridPane.rowIndex="3">
+            
+        </Button>
+    </GridPane>
+
+Basicamente, no "GridPane" eu apontei a classe, LoginControlador, colocando a path onde ele está localizado.
+
+Agora, dentro da classe, LoginControlador, vamos inserir o seguinte
+
+    package fxml;
+
+    public class LoginControlador {
+
+        public void entrar() {
+            System.out.println("Entrar...");
+        }
+    }
+
+Como essa classe já está vinculado com o arquivo, Login.fxml, então podemos compilar esse programa que vamos conseguir consultar a modal. Bom, mesmo clicando no botão "Entrar" vamos ver que não estará acontecendo nada. Precisamos que ela capiture esse evento. Então, no arquivo, Login.fxml, vamos colocar o seguinte
+
+    <?xml version="1.0" encoding="UTF-8"?>
+
+    <?import javafx.scene.layout.*?>
+    <?import javafx.scene.control.*?>
+
+    <GridPane xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="fxml.LoginControlador">
+
+        <Label text="Seja Bem Vindo" GridPane.columnIndex="0" GridPane.rowIndex="0"></Label>
+        
+        <Label text="Email: " GridPane.columnIndex="0" GridPane.rowIndex="1"></Label>
+        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1"></TextField>
+        
+        <Label text="Senha: " GridPane.columnIndex="0" GridPane.rowIndex="2"></Label>
+        <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="2"></PasswordField>
+
+        <Button text="Entrar" GridPane.columnIndex="0" GridPane.rowIndex="3" onAction="#entrar">
+            
+        </Button>
+    </GridPane>
+
+No caso, em Button, colocamos "onAction="#entrar"" que o que fiz nela foi que referenciei qual método utilizar da classe, LoginControlador, quando esse botão for acionado.
+
+Agora, sim, se abrirmos o modal, vamos conseguir verificar que o botão estará agindo aplicando o que foi definido dentro do método, entrar.
+
+Feito os esquemas acima, o próximo passo, será em capturar os textos que forem colocados dentro do "TextField" e "PasswordField". Para isso, iremos usar o "fx:id" da seguinte forma
+
+        <?xml version="1.0" encoding="UTF-8"?>
+
+    <?import javafx.scene.layout.*?>
+    <?import javafx.scene.control.*?>
+
+    <GridPane xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="fxml.LoginControlador">
+
+        <Label text="Seja Bem Vindo" GridPane.columnIndex="0" GridPane.rowIndex="0"></Label>
+        
+        <Label text="Email: " GridPane.columnIndex="0" GridPane.rowIndex="1"></Label>
+        <TextField fx:id="campoEmail" GridPane.columnIndex="1" GridPane.rowIndex="1"></TextField>
+        
+        <Label text="Senha: " GridPane.columnIndex="0" GridPane.rowIndex="2"></Label>
+        <PasswordField fx:id="campoSenha" GridPane.columnIndex="1" GridPane.rowIndex="2"></PasswordField>
+
+        <Button text="Entrar" GridPane.columnIndex="0" GridPane.rowIndex="3" onAction="#entrar">
+            
+        </Button>
+    </GridPane>
+
+Bom, como fazemos, então, para conseguirmos acessar os textos que foram colocados dentro do campo "TextField" e "PasswordField" dentro da classe, LoginControlador? No caso, vamos ter que criar uma variável nessa classe usando os pacotes "TextField" e "PasswordField" da seguinte forma
+
+    package fxml;
+
+    import javafx.fxml.FXML;
+    import javafx.scene.control.PasswordField;
+    import javafx.scene.control.TextField;
+
+    public class LoginControlador {
+
+        @FXML // - Estou dizendo que ele pertence ao arquivo fxml
+        private TextField campoEmail;
+        
+        @FXML
+        private PasswordField campoSenha;
+        
+        public void entrar() {
+            System.out.println("Entrar...");
+        }
+    }
+
+Feito isso, vamos conseguir, agora, acessar esses elementos dentro do nosso método, entrar, que foi definido dentro da classe, LoginControlador. Por hora, vamos só mostrar como print
+
+    package fxml;
+
+    import javafx.fxml.FXML;
+    import javafx.scene.control.PasswordField;
+    import javafx.scene.control.TextField;
+
+    public class LoginControlador {
+
+        @FXML // - Estou dizendo que ele pertence ao arquivo fxml
+        private TextField campoEmail;
+        
+        @FXML
+        private PasswordField campoSenha;
+        
+        public void entrar() {
+            System.out.println("Entrar...");
+            System.out.println(campoEmail);
+            System.out.println(campoEmail.getText());
+            System.out.println(campoSenha);
+            System.out.println(campoSenha.getText());
+        }
+    }
+
+Agora, rodando novamente a classe, com a modal que irá aparecer, vamos ver que o que colocarmos dentro do campo, "Email" e "Senha", vamos conseguir capturar ela, como podemos ver dos prints que é exibido dentro do console.
+
+Bom, agora, conseguimos ter os acessos às senhas e o email que o usuário colocar dentro da aplicação.
 
 ## Aula 20 - Usando CSS com FXML:
+Vamos, agora, melhorar a qualidade visual da nossa aplicação.
+
+Até, agora, focamos somente nas estruturas focadas à funcionalidade. Feito a arquitetura, vamos, então, melhorar a visualização dessa estrutura usando o css com FXML.
 
 ## Aula 21 - Ajustando Layout:
 
